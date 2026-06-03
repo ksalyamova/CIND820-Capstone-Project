@@ -5,8 +5,8 @@ Q#2: Which Toronto neighborhoods demonstrate the highest predicted socioeconomic
 Identifies where vulnerability is highest today
 Q#3: How are low-income prevalence and housing burden indicators expected to change across Toronto neighborhoods over time? Predicts where vulnerability is likely to increase in future
 
-Expanded Versio
-RESEARCH QUESTIONS - Analysis - Results - Decision - Beneficiaries
+Expanded Version:
+Research Questions - Analysis - Results - Decision - Beneficiaries
 
 Research Question #1. 
 
