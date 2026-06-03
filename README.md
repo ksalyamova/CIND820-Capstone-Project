@@ -1,14 +1,12 @@
-Summary of the project:
+#CIND 820 Capstone Project
 
-Research Question #1: Which socioeconomic variables are the strongest predictors of neighborhood-level low-income prevalence in Toronto? Identifies the factors causing poverty 
-Q#2: Which Toronto neighborhoods demonstrate the highest predicted socioeconomic vulnerability based on income, employment, education, and housing indicators?
-Identifies where vulnerability is highest today
-Q#3: How are low-income prevalence and housing burden indicators expected to change across Toronto neighborhoods over time? Predicts where vulnerability is likely to increase in future
+## Project Summary
 
-Expanded Version:
-Research Questions - Analysis - Results - Decision - Beneficiaries
+This project investigates socioeconomic vulnerability and neighborhood level low-income prevelance 
 
-Research Question #1. 
+## Research Questions
+
+### Research Question #1. 
 
 Which socioeconomic variables are the strongest predictors of neighborhood-level low-income prevalence in Toronto?
 
@@ -44,7 +42,7 @@ How could these results change current actions?
 Instead of distributing (financial) resources based mainly on historical poverty rates, organizations can focus on the underlying drivers of vulnerability.
 
 
-Research Question #2
+### Research Question #2
 
 Which Toronto neighborhoods demonstrate the highest predicted socioeconomic vulnerability based on income, employment, education, and housing indicators?
 
@@ -69,7 +67,7 @@ I will identify which neighborhoods are most vulnerable and require priority int
 How could these results change current actions?
 Resources could be allocated more strategically.
 
-Research Question 3
+### Research Question 3
 
 How are low-income prevalence and housing burden indicators expected to change across Toronto neighborhoods over time?
 
