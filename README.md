@@ -1,9 +1,11 @@
 Summary of the project:
-Research Question #1: Which socioeconomic variables are the strongest predictors of neighborhood-level low-income prevalence in Toronto? Identifies the factors causing poverty 
-Research Question #2: Which Toronto neighborhoods demonstrate the highest predicted socioeconomic vulnerability based on income, employment, education, and housing indicators?
-Identifies where vulnerability is highest today
-Research Question #3: How are low-income prevalence and housing burden indicators expected to change across Toronto neighborhoods over time? Predicts where vulnerability is likely to increase in future
 
+Research Question #1: Which socioeconomic variables are the strongest predictors of neighborhood-level low-income prevalence in Toronto? Identifies the factors causing poverty 
+Q#2: Which Toronto neighborhoods demonstrate the highest predicted socioeconomic vulnerability based on income, employment, education, and housing indicators?
+Identifies where vulnerability is highest today
+Q#3: How are low-income prevalence and housing burden indicators expected to change across Toronto neighborhoods over time? Predicts where vulnerability is likely to increase in future
+
+Expanded Versio
 RESEARCH QUESTIONS - Analysis - Results - Decision - Beneficiaries
 
 Research Question #1. 
