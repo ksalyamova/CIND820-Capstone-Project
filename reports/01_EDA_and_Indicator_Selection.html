@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>01_Data_Preparation_and_EDA</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>01_EDA_and_Indicator_Selection</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7802,42 +7802,16 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Data-Preparation-and-Exploratory-Data-Analysis">Data Preparation and Exploratory Data Analysis<a class="anchor-link" href="#Data-Preparation-and-Exploratory-Data-Analysis">¶</a></h1><h2 id="Project-Overview">Project Overview<a class="anchor-link" href="#Project-Overview">¶</a></h2><p>This project investigates socioeconomic vulnerability and neighborhood-level low-income prevalence across Toronto neighborhoods.</p>
-<p>The objective is to identify socioeconomic factors associated with poverty risk, classify vulnerable neighborhoods, and support evidence-based resource allocation decisions.</p>
-<p>The analysis supports:</p>
-<ul>
-<li>Toronto city planners</li>
-<li>Housing policy analysts</li>
-<li>Community development agencies</li>
-<li>Nonprofit organizations</li>
-</ul>
-<p>Timeframe:</p>
-<ul>
-<li>Toronto Neighborhood Profiles 2016</li>
-<li>Census-based socioeconomic indicators</li>
-</ul>
-<h2 id="RQ1">RQ1<a class="anchor-link" href="#RQ1">¶</a></h2><p>Which socioeconomic variables are the strongest predictors of neighborhood-level low-income prevalence in Toronto?</p>
-<p>Expected Output:</p>
-<ul>
-<li>Feature importance rankings</li>
-<li>Predictive models</li>
-<li>Key socioeconomic drivers</li>
-</ul>
-<hr/>
-<h2 id="RQ2">RQ2<a class="anchor-link" href="#RQ2">¶</a></h2><p>Which Toronto neighborhoods demonstrate the highest socioeconomic vulnerability?</p>
-<p>Expected Output:</p>
-<ul>
-<li>Vulnerability scores</li>
-<li>Risk classifications</li>
-<li>Neighborhood clusters</li>
-</ul>
-<hr/>
-<h2 id="RQ3">RQ3<a class="anchor-link" href="#RQ3">¶</a></h2><p>How might low-income prevalence and housing burden change over time?</p>
-<p>Expected Output:</p>
-<ul>
-<li>Forecasting framework</li>
-<li>Future vulnerability assessment</li>
-</ul>
+<h2 id="Exploratory-Data-Analysis-and-Indicator-Selection">Exploratory Data Analysis and Indicator Selection<a class="anchor-link" href="#Exploratory-Data-Analysis-and-Indicator-Selection">¶</a></h2><h3 id="Project-Overview">Project Overview<a class="anchor-link" href="#Project-Overview">¶</a></h3><p>This project investigates socioeconomic vulnerability across Toronto neighbourhoods
+using data from the Toronto Neighbourhood Profiles dataset.</p>
+<p>The objectives of this notebook are to:</p>
+<ol>
+<li>Explore the structure and quality of the dataset.</li>
+<li>Examine socioeconomic indicators related to income, education,
+employment, housing, and demographics.</li>
+<li>Identify variables that may contribute to neighbourhood vulnerability.</li>
+<li>Select indicators for subsequent predictive and clustering analyses.</li>
+</ol>
 </div>
 </div>
 </div>
@@ -7846,10 +7820,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -7858,38 +7832,7 @@ a.anchor-link {
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">"display.max_columns"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">"display.max_rows"</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s2">"C:\Users\ksalyamova\Desktop\CIND 820\CIND820-Capstone-Project\data"</span><span class="p">)</span>
-
-<span class="n">raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"neighbourhood-profiles-2016-140-model.csv"</span><span class="p">)</span>
-
-<span class="n">raw</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>(2383, 146)</pre>
 </div>
 </div>
 </div>
@@ -7901,9 +7844,8 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Dataset-Overview">Dataset Overview<a class="anchor-link" href="#Dataset-Overview">¶</a></h1><p>The raw dataset contains neighborhood-level socioeconomic indicators from the Toronto Neighborhood Profiles dataset.</p>
-<p>Rows represent indicators.</p>
-<p>Columns represent neighborhoods.</p>
+<h3 id="Data-Loading">Data Loading<a class="anchor-link" href="#Data-Loading">¶</a></h3><p>The Toronto Neighbourhood Profiles dataset contains demographic, economic, educational, labour force, and housing characteristics for Toronto neighbourhoods.</p>
+<p>The dataset is loaded directly from the raw 2016 neighbourhood profile file.</p>
 </div>
 </div>
 </div>
@@ -7912,10 +7854,45 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s2">"C:\Users\ksalyamova\Desktop\CIND 820\CIND820-Capstone-Project\data"</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"neighbourhood-profiles-2016-140-model.csv"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Rows:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Columns:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Rows: 2383
+Columns: 146
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -7926,7 +7903,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[29]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8852,10 +8829,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -8878,15 +8855,29 @@ memory usage: 2.7+ MB
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Dataset-Dimensions-and-Structure">Dataset Dimensions and Structure<a class="anchor-link" href="#Dataset-Dimensions-and-Structure">¶</a></h3><p>The Toronto Neighbourhood Profiles dataset contains socioeconomic, demographic, housing, labour force, and educational indicators for Toronto neighbourhoods.</p>
+<p>Unlike a traditional analytical dataset, the data are organized by characteristic, where each row represents an indicator and each neighbourhood is represented as a separate column.</p>
+<p>Consequently, the dataset requires restructuring before statistical analysis and modelling can be performed.</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Number of rows:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of columns:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -8899,7 +8890,8 @@ memory usage: 2.7+ MB
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>(2383, 146)
+<pre>Number of rows: 2383
+Number of columns: 146
 </pre>
 </div>
 </div>
@@ -8912,7 +8904,8 @@ memory usage: 2.7+ MB
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Missing-Value-Assessment">Missing Value Assessment<a class="anchor-link" href="#Missing-Value-Assessment">¶</a></h1>
+<h3 id="Metadata-Fields">Metadata Fields<a class="anchor-link" href="#Metadata-Fields">¶</a></h3><p>The first columns contain descriptive information about each characteristic, including category, topic, data source, and indicator name.</p>
+<p>These metadata fields will be used to identify and extract variables relevant to socioeconomic vulnerability.</p>
 </div>
 </div>
 </div>
@@ -8921,10 +8914,10 @@ memory usage: 2.7+ MB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -8935,50 +8928,12 @@ memory usage: 2.7+ MB
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>Lansing-Westgate            56
-Lawrence Park North         56
-North Riverdale             56
-North St. James Town        56
-Oakridge                    56
-Oakwood Village             56
-O'Connor-Parkview           56
-Old East York               56
-Palmerston-Little Italy     56
-Parkwoods-Donalda           56
-Pelmo Park-Humberlea        56
-Playter Estates-Danforth    56
-Pleasant View               56
-Princess-Rosethorn          56
-Regent Park                 56
-Rexdale-Kipling             56
-Rockcliffe-Smythe           56
-Niagara                     56
-Newtonbrook West            56
-Newtonbrook East            56
-dtype: int64</pre>
+<pre>Index(['_id', 'Category', 'Topic', 'Data Source', 'Characteristic',
+       'City of Toronto'],
+      dtype='object')</pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Variable-Categories">Variable Categories<a class="anchor-link" href="#Variable-Categories">¶</a></h1><p>The dataset contains indicators related to:</p>
-<ul>
-<li>Income</li>
-<li>Employment</li>
-<li>Education</li>
-<li>Housing</li>
-<li>Immigration</li>
-<li>Family Structure</li>
-<li>Demographics</li>
-</ul>
 </div>
 </div>
 </div>
@@ -8987,10 +8942,10 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">raw</span><span class="p">[</span><span class="s2">"Category"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"Category"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -9001,7 +8956,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[33]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Category
 Language                                   808
@@ -9031,32 +8986,125 @@ Name: count, dtype: int64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Dataset-Alignment-with-Research-Questions">Dataset Alignment with Research Questions<a class="anchor-link" href="#Dataset-Alignment-with-Research-Questions">¶</a></h1><table>
-<thead>
-<tr>
-<th>Research Question</th>
-<th>Dataset</th>
-<th>Expected Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RQ1</td>
-<td>Toronto Neighborhood Profiles</td>
-<td>Predictor importance</td>
-</tr>
-<tr>
-<td>RQ2</td>
-<td>Selected socioeconomic indicators</td>
-<td>Vulnerability scores</td>
-</tr>
-<tr>
-<td>RQ3</td>
-<td>Historical socioeconomic indicators</td>
-<td>Forecasting framework</td>
-</tr>
-</tbody>
-</table>
+<h3 id="Exploring-Available-Characteristics">Exploring Available Characteristics<a class="anchor-link" href="#Exploring-Available-Characteristics">¶</a></h3><p>Before selecting indicators for analysis, the available characteristics are examined to identify variables related to:</p>
+<ul>
+<li>Income</li>
+<li>Education</li>
+<li>Labour Force Participation</li>
+<li>Housing</li>
+<li>Demographic Vulnerability</li>
+</ul>
+<p>These indicators will form the basis of the vulnerability assessment framework used throughout the remainder of the project.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">characteristics</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Total characteristics:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">characteristics</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Total characteristics: 1651
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [35]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">characteristics</span><span class="p">[:</span><span class="mi">50</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Neighbourhood Number
+TSNS2020 Designation
+Population, 2016
+Population, 2011
+Population Change 2011-2016
+Total private dwellings
+Private dwellings occupied by usual residents
+Population density per square kilometre
+Land area in square kilometres
+Children (0-14 years)
+Youth (15-24 years)
+Working Age (25-54 years)
+Pre-retirement (55-64 years)
+Seniors (65+ years)
+Older Seniors (85+ years)
+Male: 0 to 04 years
+Male: 05 to 09 years
+Male: 10 to 14 years
+Male: 15 to 19 years
+Male: 20 to 24 years
+Male: 25 to 29 years
+Male: 30 to 34 years
+Male: 35 to 39 years
+Male: 40 to 44 years
+Male: 45 to 49 years
+Male: 50 to 54 years
+Male: 55 to 59 years
+Male: 60 to 64 years
+Male: 65 to 69 years
+Male: 70 to 74 years
+Male: 75 to 79 years
+Female: 10 to 14 years
+Male: 80 to 84 years
+Male: 85 to 89 years
+Male: 90 to 94 years
+Male: 95 to 99 years
+Male: 100 years and over
+Female: 0 to 04 years
+Female: 05 to 09 years
+Female: 15 to 19 years
+Female: 20 to 24 years
+Female: 25 to 29 years
+Female: 30 to 34 years
+Female: 35 to 39 years
+Female: 40 to 44 years
+Female: 45 to 49 years
+Female: 50 to 54 years
+Female: 55 to 59 years
+Female: 60 to 64 years
+Female: 65 to 69 years
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -9067,13 +9115,29 @@ Name: count, dtype: int64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Candidate-Variable-Identification">Candidate Variable Identification<a class="anchor-link" href="#Candidate-Variable-Identification">¶</a></h1><p>Based on the literature and project objectives, indicators were searched within five dimensions:</p>
-<ul>
-<li>Income</li>
-<li>Employment</li>
-<li>Education</li>
-<li>Housing</li>
-<li>Demographics</li>
+<h3 id="Selected-Vulnerability-Indicators">Selected Vulnerability Indicators<a class="anchor-link" href="#Selected-Vulnerability-Indicators">¶</a></h3><p>After reviewing the available characteristics, twelve indicators were selected to represent major dimensions of socioeconomic vulnerability.</p>
+<h4 id="Income">Income<a class="anchor-link" href="#Income">¶</a></h4><ul>
+<li>Prevalence of low income (LIM-AT)</li>
+</ul>
+<h4 id="Education">Education<a class="anchor-link" href="#Education">¶</a></h4><ul>
+<li>No certificate, diploma or degree</li>
+<li>Bachelor's degree</li>
+</ul>
+<h4 id="Labour-Force">Labour Force<a class="anchor-link" href="#Labour-Force">¶</a></h4><ul>
+<li>Participation rate</li>
+<li>Employment rate</li>
+<li>Unemployment rate</li>
+</ul>
+<h4 id="Housing">Housing<a class="anchor-link" href="#Housing">¶</a></h4><ul>
+<li>Renters</li>
+<li>Rate of core housing need</li>
+<li>Rate of unaffordable housing</li>
+<li>Lone-parent census families</li>
+</ul>
+<h4 id="Demographic-Vulnerability">Demographic Vulnerability<a class="anchor-link" href="#Demographic-Vulnerability">¶</a></h4><ul>
+<li>Immigrants</li>
+<li>Total visible minority population
+These indicators provide broad coverage of economic, educational, housing, labour market, and demographic conditions across Toronto neighbourhoods.</li>
 </ul>
 </div>
 </div>
@@ -9083,12 +9147,16 @@ Name: count, dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">income_vars</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">"income"</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">income_vars</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span>
+        <span class="s2">"income|low income|lim"</span><span class="p">,</span>
+        <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
 
-<span class="n">income_vars</span><span class="p">[[</span><span class="s2">"Category"</span><span class="p">,</span><span class="s2">"Topic"</span><span class="p">,</span><span class="s2">"Characteristic"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">income_vars</span><span class="p">[[</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -9099,7 +9167,7 @@ Name: count, dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[36]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9119,316 +9187,71 @@ Name: count, dtype: int64</pre>
 <thead>
 <tr style="text-align: right;">
 <th></th>
-<th>Category</th>
-<th>Topic</th>
 <th>Characteristic</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>944</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Total - Income statistics in 2015 for the popu...</td>
 </tr>
 <tr>
 <th>945</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Number of total income recipients aged 15 ye...</td>
 </tr>
 <tr>
 <th>946</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Median total income in 2015 among recipien...</td>
 </tr>
 <tr>
 <th>947</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Number of after-tax income recipients aged 1...</td>
 </tr>
 <tr>
 <th>948</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Median after-tax income in 2015 among reci...</td>
 </tr>
 <tr>
-<th>949</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Number of market income recipients aged 15 y...</td>
+<th>...</th>
+<td>...</td>
 </tr>
 <tr>
-<th>951</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Median market income in 2015 among recipie...</td>
+<th>2359</th>
+<td>Income taxes: Average amount ($)</td>
 </tr>
 <tr>
-<th>954</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Number of employment income recipients aged ...</td>
+<th>2360</th>
+<td>Income taxes: Aggregate amount ($'000)</td>
 </tr>
 <tr>
-<th>955</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Median employment income in 2015 among rec...</td>
+<th>2364</th>
+<td>Provincial and territorial income taxes: P...</td>
 </tr>
 <tr>
-<th>956</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Total - Income statistics in 2015 for the popu...</td>
+<th>2365</th>
+<td>Provincial and territorial income taxes: A...</td>
 </tr>
 <tr>
-<th>958</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Number of total income recipients aged 15 ye...</td>
-</tr>
-<tr>
-<th>959</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Average total income in 2015 among recipie...</td>
-</tr>
-<tr>
-<th>960</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Number of after-tax income recipients aged 1...</td>
-</tr>
-<tr>
-<th>961</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Average after-tax income in 2015 among rec...</td>
-</tr>
-<tr>
-<th>962</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Number of market income recipients aged 15 y...</td>
-</tr>
-<tr>
-<th>963</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Average market income in 2015 among recipi...</td>
-</tr>
-<tr>
-<th>967</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Number of employment income recipients aged ...</td>
-</tr>
-<tr>
-<th>968</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Average employment income in 2015 among re...</td>
-</tr>
-<tr>
-<th>969</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Total - Employment income statistics for the p...</td>
-</tr>
-<tr>
-<th>970</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Number of employment income recipients aged 15...</td>
-</tr>
-<tr>
-<th>971</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Median employment income in 2015 for full-year...</td>
-</tr>
-<tr>
-<th>972</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Average employment income in 2015 for full-yea...</td>
-</tr>
-<tr>
-<th>973</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Composition of total income in 2015 of the pop...</td>
-</tr>
-<tr>
-<th>974</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Market income (%)</td>
-</tr>
-<tr>
-<th>975</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Employment income (%)</td>
-</tr>
-<tr>
-<th>977</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Total - Total income groups in 2015 for the po...</td>
-</tr>
-<tr>
-<th>978</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Without total income</td>
-</tr>
-<tr>
-<th>979</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>With total income</td>
-</tr>
-<tr>
-<th>980</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Percentage with total income</td>
-</tr>
-<tr>
-<th>984</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Total - After-tax income groups in 2015 for th...</td>
-</tr>
-<tr>
-<th>985</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Without after-tax income</td>
-</tr>
-<tr>
-<th>986</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>With after-tax income</td>
-</tr>
-<tr>
-<th>987</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Percentage with after-tax income</td>
-</tr>
-<tr>
-<th>999</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Total - Employment income groups in 2015 for t...</td>
-</tr>
-<tr>
-<th>1000</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Without employment income</td>
-</tr>
-<tr>
-<th>1001</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>With employment income</td>
-</tr>
-<tr>
-<th>1002</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
-<td>Percentage with employment income</td>
-</tr>
-<tr>
-<th>1014</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Median total income of one-person househ...</td>
-</tr>
-<tr>
-<th>1017</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Total - Income statistics in 2015 for private ...</td>
-</tr>
-<tr>
-<th>1018</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Median total income of households in 2015 ($)</td>
-</tr>
-<tr>
-<th>1019</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Median after-tax income of households in 201...</td>
-</tr>
-<tr>
-<th>1020</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Total - Income statistics in 2015 for one-...</td>
-</tr>
-<tr>
-<th>1022</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Median after-tax income of one-person ho...</td>
-</tr>
-<tr>
-<th>1023</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Total - Income statistics in 2015 for two-...</td>
-</tr>
-<tr>
-<th>1024</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Median total income of two-or-more-perso...</td>
-</tr>
-<tr>
-<th>1025</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Median after-tax income of two-or-more-p...</td>
-</tr>
-<tr>
-<th>1026</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Total - Income statistics in 2015for private h...</td>
-</tr>
-<tr>
-<th>1027</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Average total income of households in 2015 ($)</td>
-</tr>
-<tr>
-<th>1029</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Average after-tax income of households in 20...</td>
-</tr>
-<tr>
-<th>1030</th>
-<td>Income</td>
-<td>Income of households in 2015</td>
-<td>Total - Income statistics in 2015 for one-...</td>
+<th>2366</th>
+<td>Provincial and territorial income taxes: A...</td>
 </tr>
 </tbody>
 </table>
+<p>133 rows × 1 columns</p>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Education-Indicators">Education Indicators<a class="anchor-link" href="#Education-Indicators">¶</a></h3><p>Educational attainment is associated with employment opportunities,
+income potential, and social mobility.</p>
 </div>
 </div>
 </div>
@@ -9437,12 +9260,15 @@ Name: count, dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">employment_vars</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">"employment|unemployment|participation"</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">education_vars</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span>
+        <span class="s2">"diploma|degree|education"</span><span class="p">,</span>
+        <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
 
-<span class="n">employment_vars</span><span class="p">[[</span><span class="s2">"Category"</span><span class="p">,</span><span class="s2">"Topic"</span><span class="p">,</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
+<span class="n">education_vars</span><span class="p">[[</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -9453,7 +9279,7 @@ Name: count, dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[37]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9473,196 +9299,352 @@ Name: count, dtype: int64</pre>
 <thead>
 <tr style="text-align: right;">
 <th></th>
-<th>Category</th>
-<th>Topic</th>
+<th>Characteristic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>1211</th>
+<td>Master's degree</td>
+</tr>
+<tr>
+<th>1675</th>
+<td>Postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1683</th>
+<td>Apprenticeship or trades certificate or di...</td>
+</tr>
+<tr>
+<th>1702</th>
+<td>Total - Highest certificate, diploma or degree...</td>
+</tr>
+<tr>
+<th>1703</th>
+<td>No certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1704</th>
+<td>Secondary (high) school diploma or equivalen...</td>
+</tr>
+<tr>
+<th>1705</th>
+<td>Trades certificate or diploma other than...</td>
+</tr>
+<tr>
+<th>1707</th>
+<td>College, CEGEP or other non-university cer...</td>
+</tr>
+<tr>
+<th>1708</th>
+<td>University certificate or diploma below ba...</td>
+</tr>
+<tr>
+<th>1709</th>
+<td>University certificate, diploma or degree ...</td>
+</tr>
+<tr>
+<th>1710</th>
+<td>Bachelor's degree</td>
+</tr>
+<tr>
+<th>1711</th>
+<td>University certificate or diploma above ...</td>
+</tr>
+<tr>
+<th>1712</th>
+<td>Degree in medicine, dentistry, veterinar...</td>
+</tr>
+<tr>
+<th>1714</th>
+<td>Total - Highest certificate, diploma or degree...</td>
+</tr>
+<tr>
+<th>1715</th>
+<td>No certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1716</th>
+<td>Secondary (high) school diploma or equivalen...</td>
+</tr>
+<tr>
+<th>1717</th>
+<td>Postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1718</th>
+<td>Apprenticeship or trades certificate or di...</td>
+</tr>
+<tr>
+<th>1719</th>
+<td>Trades certificate or diploma other than...</td>
+</tr>
+<tr>
+<th>1720</th>
+<td>Master's degree</td>
+</tr>
+<tr>
+<th>1722</th>
+<td>College, CEGEP or other non-university cer...</td>
+</tr>
+<tr>
+<th>1723</th>
+<td>University certificate or diploma below ba...</td>
+</tr>
+<tr>
+<th>1724</th>
+<td>University certificate, diploma or degree ...</td>
+</tr>
+<tr>
+<th>1725</th>
+<td>Bachelor's degree</td>
+</tr>
+<tr>
+<th>1726</th>
+<td>University certificate or diploma above ...</td>
+</tr>
+<tr>
+<th>1727</th>
+<td>Degree in medicine, dentistry, veterinar...</td>
+</tr>
+<tr>
+<th>1730</th>
+<td>No postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1731</th>
+<td>Education</td>
+</tr>
+<tr>
+<th>1732</th>
+<td>13. Education</td>
+</tr>
+<tr>
+<th>1794</th>
+<td>No postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1796</th>
+<td>Education</td>
+</tr>
+<tr>
+<th>1797</th>
+<td>13. Education</td>
+</tr>
+<tr>
+<th>1856</th>
+<td>No postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1857</th>
+<td>Postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1870</th>
+<td>No postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1871</th>
+<td>Postsecondary certificate, diploma or degree</td>
+</tr>
+<tr>
+<th>1926</th>
+<td>4 Occupations in education, law and social...</td>
+</tr>
+<tr>
+<th>1949</th>
+<td>61 Educational services</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Labour-Indicators">Labour Indicators<a class="anchor-link" href="#Labour-Indicators">¶</a></h3><p>Labour market participation and unemployment are important measures of
+economic opportunity and stability.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [38]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">labour_vars</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span>
+        <span class="s2">"employment|unemployment|participation"</span><span class="p">,</span>
+        <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+
+<span class="n">labour_vars</span><span class="p">[[</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[38]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
 <th>Characteristic</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>954</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Number of employment income recipients aged ...</td>
 </tr>
 <tr>
 <th>955</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Median employment income in 2015 among rec...</td>
 </tr>
 <tr>
 <th>967</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Number of employment income recipients aged ...</td>
 </tr>
 <tr>
 <th>968</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Average employment income in 2015 among re...</td>
 </tr>
 <tr>
 <th>969</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Total - Employment income statistics for the p...</td>
 </tr>
 <tr>
 <th>970</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Number of employment income recipients aged 15...</td>
 </tr>
 <tr>
 <th>971</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Median employment income in 2015 for full-year...</td>
 </tr>
 <tr>
 <th>972</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Average employment income in 2015 for full-yea...</td>
 </tr>
 <tr>
 <th>975</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Employment income (%)</td>
 </tr>
 <tr>
 <th>999</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Total - Employment income groups in 2015 for t...</td>
 </tr>
 <tr>
 <th>1000</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Without employment income</td>
 </tr>
 <tr>
 <th>1001</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>With employment income</td>
 </tr>
 <tr>
 <th>1002</th>
-<td>Income</td>
-<td>Income of individuals in 2015</td>
 <td>Percentage with employment income</td>
 </tr>
 <tr>
 <th>1888</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Participation rate</td>
 </tr>
 <tr>
 <th>1889</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Employment rate</td>
 </tr>
 <tr>
 <th>1890</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Unemployment rate</td>
 </tr>
 <tr>
 <th>1896</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Participation rate (Males)</td>
 </tr>
 <tr>
 <th>1897</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Employment rate (Males)</td>
 </tr>
 <tr>
 <th>1898</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Unemployment rate (Males)</td>
 </tr>
 <tr>
 <th>1904</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Participation rate (Females)</td>
 </tr>
 <tr>
 <th>1905</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Employment rate (Females)</td>
 </tr>
 <tr>
 <th>1906</th>
-<td>Labour</td>
-<td>Labour force status</td>
 <td>Unemployment rate (Females)</td>
 </tr>
 <tr>
 <th>2277</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Net self-employment income: Population w...</td>
 </tr>
 <tr>
 <th>2278</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Employment income: Population with an amount</td>
 </tr>
 <tr>
 <th>2279</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Employment income: Average amount ($)</td>
 </tr>
 <tr>
 <th>2281</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Employment income: Aggregate amount ($'000)</td>
 </tr>
 <tr>
 <th>2285</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Net self-employment income: Average amou...</td>
 </tr>
 <tr>
 <th>2286</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Net self-employment income: Aggregate am...</td>
 </tr>
 <tr>
 <th>2320</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Employment Insurance (EI) benefits: Popula...</td>
 </tr>
 <tr>
 <th>2321</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Employment Insurance (EI) benefits: Averag...</td>
 </tr>
 <tr>
 <th>2322</th>
-<td>Income</td>
-<td>Income sources</td>
 <td>Employment Insurance (EI) benefits: Aggreg...</td>
 </tr>
 </tbody>
@@ -9677,13 +9659,16 @@ Name: count, dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">education_vars</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">"degree|certificate|diploma"</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">housing_vars</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span>
+        <span class="s2">"housing|rent|owner"</span><span class="p">,</span>
+        <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
 
-<span class="n">education_vars</span><span class="p">[[</span><span class="s2">"Category"</span><span class="p">,</span><span class="s2">"Topic"</span><span class="p">,</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
+<span class="n">housing_vars</span><span class="p">[[</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -9694,7 +9679,7 @@ Name: count, dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[39]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9714,611 +9699,205 @@ Name: count, dtype: int64</pre>
 <thead>
 <tr style="text-align: right;">
 <th></th>
-<th>Category</th>
-<th>Topic</th>
-<th>Characteristic</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>1211</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Master's degree</td>
-</tr>
-<tr>
-<th>1675</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Postsecondary certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1683</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Apprenticeship or trades certificate or di...</td>
-</tr>
-<tr>
-<th>1702</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Total - Highest certificate, diploma or degree...</td>
-</tr>
-<tr>
-<th>1703</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>No certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1704</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Secondary (high) school diploma or equivalen...</td>
-</tr>
-<tr>
-<th>1705</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Trades certificate or diploma other than...</td>
-</tr>
-<tr>
-<th>1706</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Certificate of Apprenticeship or Certifi...</td>
-</tr>
-<tr>
-<th>1707</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>College, CEGEP or other non-university cer...</td>
-</tr>
-<tr>
-<th>1708</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>University certificate or diploma below ba...</td>
-</tr>
-<tr>
-<th>1709</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>University certificate, diploma or degree ...</td>
-</tr>
-<tr>
-<th>1710</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Bachelor's degree</td>
-</tr>
-<tr>
-<th>1711</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>University certificate or diploma above ...</td>
-</tr>
-<tr>
-<th>1712</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Degree in medicine, dentistry, veterinar...</td>
-</tr>
-<tr>
-<th>1714</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Total - Highest certificate, diploma or degree...</td>
-</tr>
-<tr>
-<th>1715</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>No certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1716</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Secondary (high) school diploma or equivalen...</td>
-</tr>
-<tr>
-<th>1717</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Postsecondary certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1718</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Apprenticeship or trades certificate or di...</td>
-</tr>
-<tr>
-<th>1719</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Trades certificate or diploma other than...</td>
-</tr>
-<tr>
-<th>1720</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Master's degree</td>
-</tr>
-<tr>
-<th>1721</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Certificate of Apprenticeship or Certifi...</td>
-</tr>
-<tr>
-<th>1722</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>College, CEGEP or other non-university cer...</td>
-</tr>
-<tr>
-<th>1723</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>University certificate or diploma below ba...</td>
-</tr>
-<tr>
-<th>1724</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>University certificate, diploma or degree ...</td>
-</tr>
-<tr>
-<th>1725</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Bachelor's degree</td>
-</tr>
-<tr>
-<th>1726</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>University certificate or diploma above ...</td>
-</tr>
-<tr>
-<th>1727</th>
-<td>Education</td>
-<td>Highest certificate, diploma or degree</td>
-<td>Degree in medicine, dentistry, veterinar...</td>
-</tr>
-<tr>
-<th>1730</th>
-<td>Education</td>
-<td>Major field of study - Classification of Instr...</td>
-<td>No postsecondary certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1794</th>
-<td>Education</td>
-<td>Major field of study - Classification of Instr...</td>
-<td>No postsecondary certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1856</th>
-<td>Education</td>
-<td>Location of study compared with province or te...</td>
-<td>No postsecondary certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1857</th>
-<td>Education</td>
-<td>Location of study compared with province or te...</td>
-<td>Postsecondary certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1870</th>
-<td>Education</td>
-<td>Location of study compared with province or te...</td>
-<td>No postsecondary certificate, diploma or degree</td>
-</tr>
-<tr>
-<th>1871</th>
-<td>Education</td>
-<td>Location of study compared with province or te...</td>
-<td>Postsecondary certificate, diploma or degree</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">housing_vars</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">"housing"</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
-
-<span class="n">housing_vars</span><span class="p">[[</span><span class="s2">"Category"</span><span class="p">,</span><span class="s2">"Topic"</span><span class="p">,</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>Category</th>
-<th>Topic</th>
-<th>Characteristic</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>1630</th>
-<td>Housing</td>
-<td>Household characteristics</td>
-<td>Band housing</td>
-</tr>
-<tr>
-<th>1651</th>
-<td>Housing</td>
-<td>Household characteristics</td>
-<td>Total - Private households by housing suitabil...</td>
-</tr>
-<tr>
-<th>1681</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Rate of core housing need</td>
-</tr>
-<tr>
-<th>1682</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Number of households in core housing need</td>
-</tr>
-<tr>
-<th>1684</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Core housing need, Unsuitable only</td>
-</tr>
-<tr>
-<th>1685</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Core housing need, Inadequate only</td>
-</tr>
-<tr>
-<th>1686</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Core housing need, Unaffordable only</td>
-</tr>
-<tr>
-<th>1687</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Core housing need, two or more dimensions</td>
-</tr>
-<tr>
-<th>1688</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Rate of unaffordable housing</td>
-</tr>
-<tr>
-<th>1689</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Unaffordable housing not in core need</td>
-</tr>
-<tr>
-<th>1690</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Unaffordable housing in core need</td>
-</tr>
-<tr>
-<th>1691</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Unaffordable housing not applicable for core need</td>
-</tr>
-<tr>
-<th>1692</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Rate of unaffordable housing, owner-households</td>
-</tr>
-<tr>
-<th>1693</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Rate of unaffordable housing, renter-households</td>
-</tr>
-<tr>
-<th>1694</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Rate of inadequate housing</td>
-</tr>
-<tr>
-<th>1695</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Inadequate housing not in core need</td>
-</tr>
-<tr>
-<th>1696</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Inadequate housing in core need</td>
-</tr>
-<tr>
-<th>1697</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Inadequate housing not applicable for core need</td>
-</tr>
-<tr>
-<th>1698</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Rate of unsuitable housing</td>
-</tr>
-<tr>
-<th>1699</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Unsuitable housing not in core need</td>
-</tr>
-<tr>
-<th>1700</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Unsuitable housing in core need</td>
-</tr>
-<tr>
-<th>1701</th>
-<td>Housing</td>
-<td>Core housing need</td>
-<td>Unsuitable housing not applicable for core need</td>
-</tr>
-<tr>
-<th>1942</th>
-<td>Labour</td>
-<td>Industry - North American Industry Classificat...</td>
-<td>48-49 Transportation and warehousing</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="n">demographic_vars</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">"immigrant|lone"</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
-
-<span class="n">demographic_vars</span><span class="p">[[</span><span class="s2">"Category"</span><span class="p">,</span><span class="s2">"Topic"</span><span class="p">,</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>Category</th>
-<th>Topic</th>
 <th>Characteristic</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>94</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics</td>
 <td>Total lone-parent families by sex of parent</td>
 </tr>
 <tr>
+<th>95</th>
+<td>Female parent</td>
+</tr>
+<tr>
+<th>96</th>
+<td>Male parent</td>
+</tr>
+<tr>
 <th>102</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics</td>
 <td>Lone-parent census families in private households</td>
 </tr>
 <tr>
-<th>116</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics of adults</td>
-<td>Persons living alone (total)</td>
-</tr>
-<tr>
-<th>117</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics of adults</td>
-<td>Persons living alone (per cent)</td>
-</tr>
-<tr>
-<th>119</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics of adults</td>
-<td>Persons age 65+ living alone (total)</td>
-</tr>
-<tr>
-<th>120</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics of adults</td>
-<td>Persons age 65+ living alone (per cent)</td>
-</tr>
-<tr>
-<th>122</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics of adults</td>
-<td>Persons age 85+ living alone (total)</td>
-</tr>
-<tr>
-<th>123</th>
-<td>Families, households and marital status</td>
-<td>Family characteristics of adults</td>
-<td>Persons age 85+ living alone (per cent)</td>
-</tr>
-<tr>
 <th>1081</th>
-<td>Income</td>
-<td>Income of economic families in 2015</td>
 <td>Total - Income statistics in 2015 for lone-par...</td>
 </tr>
 <tr>
 <th>1088</th>
-<td>Income</td>
-<td>Income of economic families in 2015</td>
 <td>Median total income of lone-parent economic ...</td>
 </tr>
 <tr>
 <th>1089</th>
-<td>Income</td>
-<td>Income of economic families in 2015</td>
 <td>Median after-tax income of lone-parent econo...</td>
 </tr>
 <tr>
 <th>1090</th>
-<td>Income</td>
-<td>Income of economic families in 2015</td>
 <td>Average family size of lone-parent economic ...</td>
 </tr>
 <tr>
 <th>1101</th>
-<td>Income</td>
-<td>Income of economic families in 2015</td>
 <td>Total - Income statistics in 2015 for lone-par...</td>
 </tr>
 <tr>
 <th>1102</th>
-<td>Income</td>
-<td>Income of economic families in 2015</td>
 <td>Average total income of lone-parent economic...</td>
 </tr>
 <tr>
 <th>1103</th>
-<td>Income</td>
-<td>Income of economic families in 2015</td>
 <td>Average after-tax income of lone-parent econ...</td>
 </tr>
 <tr>
-<th>1150</th>
-<td>Immigration and citizenship</td>
-<td>Immigrant status and period of immigration</td>
-<td>Total - Immigrant status and period of immigra...</td>
+<th>1628</th>
+<td>Owner</td>
 </tr>
 <tr>
-<th>1151</th>
-<td>Immigration and citizenship</td>
-<td>Immigrant status and period of immigration</td>
-<td>Non-immigrants</td>
+<th>1629</th>
+<td>Renter</td>
 </tr>
 <tr>
-<th>1152</th>
-<td>Immigration and citizenship</td>
-<td>Immigrant status and period of immigration</td>
-<td>Immigrants</td>
+<th>1630</th>
+<td>Band housing</td>
 </tr>
 <tr>
-<th>1162</th>
-<td>Immigration and citizenship</td>
-<td>Age at immigration</td>
-<td>Total - Age at immigration for the immigrant p...</td>
+<th>1651</th>
+<td>Total - Private households by housing suitabil...</td>
 </tr>
 <tr>
-<th>1168</th>
-<td>Immigration and citizenship</td>
-<td>Immigrants by selected place of birth</td>
-<td>Total - Selected places of birth for the immig...</td>
+<th>1676</th>
+<td>Total -  Owner and tenant households with hous...</td>
 </tr>
 <tr>
-<th>1231</th>
-<td>Immigration and citizenship</td>
-<td>Recent immigrants by selected place of birth</td>
-<td>Total - Selected places of birth for the recen...</td>
+<th>1681</th>
+<td>Rate of core housing need</td>
 </tr>
 <tr>
-<th>1295</th>
-<td>Immigration and citizenship</td>
-<td>Admission category and applicant type</td>
-<td>Total - Admission category and applicant type ...</td>
+<th>1682</th>
+<td>Number of households in core housing need</td>
 </tr>
 <tr>
-<th>1296</th>
-<td>Immigration and citizenship</td>
-<td>Admission category and applicant type</td>
-<td>Economic immigrants</td>
+<th>1683</th>
+<td>Apprenticeship or trades certificate or di...</td>
 </tr>
 <tr>
-<th>1299</th>
-<td>Immigration and citizenship</td>
-<td>Admission category and applicant type</td>
-<td>Immigrants sponsored by family</td>
+<th>1684</th>
+<td>Core housing need, Unsuitable only</td>
 </tr>
 <tr>
-<th>1301</th>
-<td>Immigration and citizenship</td>
-<td>Admission category and applicant type</td>
-<td>Other immigrants</td>
+<th>1685</th>
+<td>Core housing need, Inadequate only</td>
+</tr>
+<tr>
+<th>1686</th>
+<td>Core housing need, Unaffordable only</td>
+</tr>
+<tr>
+<th>1687</th>
+<td>Core housing need, two or more dimensions</td>
+</tr>
+<tr>
+<th>1688</th>
+<td>Rate of unaffordable housing</td>
+</tr>
+<tr>
+<th>1689</th>
+<td>Unaffordable housing not in core need</td>
+</tr>
+<tr>
+<th>1690</th>
+<td>Unaffordable housing in core need</td>
+</tr>
+<tr>
+<th>1691</th>
+<td>Unaffordable housing not applicable for core need</td>
+</tr>
+<tr>
+<th>1692</th>
+<td>Rate of unaffordable housing, owner-households</td>
+</tr>
+<tr>
+<th>1693</th>
+<td>Rate of unaffordable housing, renter-households</td>
+</tr>
+<tr>
+<th>1694</th>
+<td>Rate of inadequate housing</td>
+</tr>
+<tr>
+<th>1695</th>
+<td>Inadequate housing not in core need</td>
+</tr>
+<tr>
+<th>1696</th>
+<td>Inadequate housing in core need</td>
+</tr>
+<tr>
+<th>1697</th>
+<td>Inadequate housing not applicable for core need</td>
+</tr>
+<tr>
+<th>1698</th>
+<td>Rate of unsuitable housing</td>
+</tr>
+<tr>
+<th>1699</th>
+<td>Unsuitable housing not in core need</td>
+</tr>
+<tr>
+<th>1700</th>
+<td>Unsuitable housing in core need</td>
+</tr>
+<tr>
+<th>1701</th>
+<td>Unsuitable housing not applicable for core need</td>
+</tr>
+<tr>
+<th>1705</th>
+<td>Trades certificate or diploma other than...</td>
+</tr>
+<tr>
+<th>1706</th>
+<td>Certificate of Apprenticeship or Certifi...</td>
+</tr>
+<tr>
+<th>1718</th>
+<td>Apprenticeship or trades certificate or di...</td>
+</tr>
+<tr>
+<th>1719</th>
+<td>Trades certificate or diploma other than...</td>
+</tr>
+<tr>
+<th>1721</th>
+<td>Certificate of Apprenticeship or Certifi...</td>
+</tr>
+<tr>
+<th>1860</th>
+<td>Different than province or territory of ...</td>
+</tr>
+<tr>
+<th>1874</th>
+<td>Different than province or territory of ...</td>
+</tr>
+<tr>
+<th>1942</th>
+<td>48-49 Transportation and warehousing</td>
+</tr>
+<tr>
+<th>1945</th>
+<td>53 Real estate and rental and leasing</td>
+</tr>
+<tr>
+<th>1962</th>
+<td>Commute to a different census subdivision (C...</td>
+</tr>
+<tr>
+<th>1963</th>
+<td>Commute to a different census subdivision (C...</td>
+</tr>
+<tr>
+<th>1964</th>
+<td>Commute to a different province or territory</td>
 </tr>
 </tbody>
 </table>
@@ -10334,93 +9913,123 @@ Name: count, dtype: int64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Final-Indicator-Selection">Final Indicator Selection<a class="anchor-link" href="#Final-Indicator-Selection">¶</a></h1><p>Based on exploratory analysis and socioeconomic vulnerability literature, the following indicators were selected for future model development.</p>
-<p>These indicators represent five dimensions of vulnerability:</p>
-<ul>
-<li>Income</li>
-<li>Employment</li>
-<li>Education</li>
-<li>Housing</li>
-<li>Demographic Characteristics</li>
-</ul>
+<h3 id="Demographic-Indicators">Demographic Indicators<a class="anchor-link" href="#Demographic-Indicators">¶</a></h3><p>Immigration, visible minority status, and family structure may be associated
+with varying levels of socioeconomic vulnerability.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<table>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">demo_vars</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"Characteristic"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span>
+        <span class="s2">"immigrant|minority|visible minority|lone parent"</span><span class="p">,</span>
+        <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+
+<span class="n">demo_vars</span><span class="p">[[</span><span class="s2">"Characteristic"</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[40]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
 <thead>
-<tr>
-<th>Indicator</th>
-<th>Category</th>
-<th>Purpose</th>
+<tr style="text-align: right;">
+<th></th>
+<th>Characteristic</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Low Income Measure (LIM-AT)</td>
-<td>Target</td>
-<td>Outcome Variable</td>
+<th>134</th>
+<td>Official language minority (percentage)</td>
 </tr>
 <tr>
-<td>Median Household Income</td>
-<td>Income</td>
-<td>Economic Well-being</td>
+<th>138</th>
+<td>Official language minority (number)</td>
 </tr>
 <tr>
-<td>Median After-Tax Income</td>
-<td>Income</td>
-<td>Disposable Income</td>
+<th>1150</th>
+<td>Total - Immigrant status and period of immigra...</td>
 </tr>
 <tr>
-<td>Unemployment Rate</td>
-<td>Employment</td>
-<td>Labour Market Vulnerability</td>
+<th>1151</th>
+<td>Non-immigrants</td>
 </tr>
 <tr>
-<td>Employment Rate</td>
-<td>Employment</td>
-<td>Economic Stability</td>
+<th>1152</th>
+<td>Immigrants</td>
 </tr>
 <tr>
-<td>Participation Rate</td>
-<td>Employment</td>
-<td>Workforce Engagement</td>
+<th>1162</th>
+<td>Total - Age at immigration for the immigrant p...</td>
 </tr>
 <tr>
-<td>Bachelor's Degree</td>
-<td>Education</td>
-<td>Human Capital</td>
+<th>1168</th>
+<td>Total - Selected places of birth for the immig...</td>
 </tr>
 <tr>
-<td>No Certificate/Diploma</td>
-<td>Education</td>
-<td>Educational Disadvantage</td>
+<th>1231</th>
+<td>Total - Selected places of birth for the recen...</td>
 </tr>
 <tr>
-<td>Core Housing Need</td>
-<td>Housing</td>
-<td>Housing Vulnerability</td>
+<th>1295</th>
+<td>Total - Admission category and applicant type ...</td>
 </tr>
 <tr>
-<td>Unaffordable Housing</td>
-<td>Housing</td>
-<td>Housing Burden</td>
+<th>1296</th>
+<td>Economic immigrants</td>
 </tr>
 <tr>
-<td>Immigrant Population</td>
-<td>Demographic</td>
-<td>Population Characteristics</td>
+<th>1299</th>
+<td>Immigrants sponsored by family</td>
 </tr>
 <tr>
-<td>Lone Parent Families</td>
-<td>Demographic</td>
-<td>Household Vulnerability</td>
+<th>1301</th>
+<td>Other immigrants</td>
+</tr>
+<tr>
+<th>1335</th>
+<td>Total - Visible minority for the population in...</td>
+</tr>
+<tr>
+<th>1336</th>
+<td>Total visible minority population</td>
+</tr>
+<tr>
+<th>1346</th>
+<td>Visible minority; n.i.e.</td>
+</tr>
+<tr>
+<th>1348</th>
+<td>Not a visible minority</td>
 </tr>
 </tbody>
 </table>
@@ -10428,20 +10037,1130 @@ Name: count, dtype: int64</pre>
 </div>
 </div>
 </div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">selected_indicators</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+
+    <span class="s2">"Indicator"</span><span class="p">:[</span>
+        <span class="s2">"LIM_AT"</span><span class="p">,</span>
+        <span class="s2">"Immigrants"</span><span class="p">,</span>
+        <span class="s2">"Visible_Minority"</span><span class="p">,</span>
+        <span class="s2">"Renters"</span><span class="p">,</span>
+        <span class="s2">"No_Diploma"</span><span class="p">,</span>
+        <span class="s2">"Bachelors_Degree"</span><span class="p">,</span>
+        <span class="s2">"Core_Housing_Need"</span><span class="p">,</span>
+        <span class="s2">"Unaffordable_Housing"</span><span class="p">,</span>
+        <span class="s2">"Participation_Rate"</span><span class="p">,</span>
+        <span class="s2">"Employment_Rate"</span><span class="p">,</span>
+        <span class="s2">"Unemployment_Rate"</span><span class="p">,</span>
+        <span class="s2">"Lone_Parent_Families"</span><span class="p">],</span>
+
+    <span class="s2">"Row_ID"</span><span class="p">:[</span>
+        <span class="mi">1130</span><span class="p">,</span>
+        <span class="mi">1152</span><span class="p">,</span>
+        <span class="mi">1336</span><span class="p">,</span>
+        <span class="mi">1629</span><span class="p">,</span>
+        <span class="mi">1703</span><span class="p">,</span>
+        <span class="mi">1710</span><span class="p">,</span>
+        <span class="mi">1682</span><span class="p">,</span>
+        <span class="mi">1688</span><span class="p">,</span>
+        <span class="mi">1888</span><span class="p">,</span>
+        <span class="mi">1889</span><span class="p">,</span>
+        <span class="mi">1890</span><span class="p">,</span>
+        <span class="mi">102</span>
+    <span class="p">]})</span>
+
+<span class="n">selected_indicators</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[41]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Indicator</th>
+<th>Row_ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>LIM_AT</td>
+<td>1130</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Immigrants</td>
+<td>1152</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Visible_Minority</td>
+<td>1336</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Renters</td>
+<td>1629</td>
+</tr>
+<tr>
+<th>4</th>
+<td>No_Diploma</td>
+<td>1703</td>
+</tr>
+<tr>
+<th>5</th>
+<td>Bachelors_Degree</td>
+<td>1710</td>
+</tr>
+<tr>
+<th>6</th>
+<td>Core_Housing_Need</td>
+<td>1682</td>
+</tr>
+<tr>
+<th>7</th>
+<td>Unaffordable_Housing</td>
+<td>1688</td>
+</tr>
+<tr>
+<th>8</th>
+<td>Participation_Rate</td>
+<td>1888</td>
+</tr>
+<tr>
+<th>9</th>
+<td>Employment_Rate</td>
+<td>1889</td>
+</tr>
+<tr>
+<th>10</th>
+<td>Unemployment_Rate</td>
+<td>1890</td>
+</tr>
+<tr>
+<th>11</th>
+<td>Lone_Parent_Families</td>
+<td>102</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Preliminary-Findings">Preliminary Findings<a class="anchor-link" href="#Preliminary-Findings">¶</a></h1><p>Key observations include:</p>
-<ol>
-<li>The raw dataset contains over 2,300 socioeconomic indicators.</li>
-<li>The previous modeling dataset contained only six indicators.</li>
-<li>Additional variables related to employment, housing, education, and demographics are available.</li>
-<li>Expanding the feature set is expected to improve predictive performance.</li>
-<li>The dataset supports all three research questions.</li>
-</ol>
+<h2 id="Extract-Selected-Indicators">Extract Selected Indicators<a class="anchor-link" href="#Extract-Selected-Indicators">¶</a></h2><p>The selected indicator rows are extracted from the original dataset.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [42]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">selected_row_ids</span> <span class="o">=</span> <span class="n">selected_indicators</span><span class="p">[</span><span class="s2">"Row_ID"</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">selected_rows</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">selected_row_ids</span><span class="p">]</span>
+
+<span class="n">selected_rows</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[42]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>_id</th>
+<th>Category</th>
+<th>Topic</th>
+<th>Data Source</th>
+<th>Characteristic</th>
+<th>City of Toronto</th>
+<th>Agincourt North</th>
+<th>Agincourt South-Malvern West</th>
+<th>Alderwood</th>
+<th>Annex</th>
+<th>Banbury-Don Mills</th>
+<th>Bathurst Manor</th>
+<th>Bay Street Corridor</th>
+<th>Bayview Village</th>
+<th>Bayview Woods-Steeles</th>
+<th>Bedford Park-Nortown</th>
+<th>Beechborough-Greenbrook</th>
+<th>Bendale</th>
+<th>Birchcliffe-Cliffside</th>
+<th>Black Creek</th>
+<th>Blake-Jones</th>
+<th>Briar Hill-Belgravia</th>
+<th>Bridle Path-Sunnybrook-York Mills</th>
+<th>Broadview North</th>
+<th>Brookhaven-Amesbury</th>
+<th>Cabbagetown-South St. James Town</th>
+<th>Caledonia-Fairbank</th>
+<th>Casa Loma</th>
+<th>Centennial Scarborough</th>
+<th>Church-Yonge Corridor</th>
+<th>Clairlea-Birchmount</th>
+<th>Clanton Park</th>
+<th>Cliffcrest</th>
+<th>Corso Italia-Davenport</th>
+<th>Danforth</th>
+<th>Danforth East York</th>
+<th>Don Valley Village</th>
+<th>Dorset Park</th>
+<th>Dovercourt-Wallace Emerson-Junction</th>
+<th>Downsview-Roding-CFB</th>
+<th>Dufferin Grove</th>
+<th>East End-Danforth</th>
+<th>Edenbridge-Humber Valley</th>
+<th>Eglinton East</th>
+<th>Elms-Old Rexdale</th>
+<th>Englemount-Lawrence</th>
+<th>Eringate-Centennial-West Deane</th>
+<th>Etobicoke West Mall</th>
+<th>Flemingdon Park</th>
+<th>Forest Hill North</th>
+<th>Forest Hill South</th>
+<th>Glenfield-Jane Heights</th>
+<th>Greenwood-Coxwell</th>
+<th>Guildwood</th>
+<th>Henry Farm</th>
+<th>High Park North</th>
+<th>High Park-Swansea</th>
+<th>Highland Creek</th>
+<th>Hillcrest Village</th>
+<th>Humber Heights-Westmount</th>
+<th>Humber Summit</th>
+<th>Humbermede</th>
+<th>Humewood-Cedarvale</th>
+<th>Ionview</th>
+<th>Islington-City Centre West</th>
+<th>Junction Area</th>
+<th>Keelesdale-Eglinton West</th>
+<th>Kennedy Park</th>
+<th>Kensington-Chinatown</th>
+<th>Kingsview Village-The Westway</th>
+<th>Kingsway South</th>
+<th>Lambton Baby Point</th>
+<th>L'Amoreaux</th>
+<th>Lansing-Westgate</th>
+<th>Lawrence Park North</th>
+<th>Lawrence Park South</th>
+<th>Leaside-Bennington</th>
+<th>Little Portugal</th>
+<th>Long Branch</th>
+<th>Malvern</th>
+<th>Maple Leaf</th>
+<th>Markland Wood</th>
+<th>Milliken</th>
+<th>Mimico (includes Humber Bay Shores)</th>
+<th>Morningside</th>
+<th>Moss Park</th>
+<th>Mount Dennis</th>
+<th>Mount Olive-Silverstone-Jamestown</th>
+<th>Mount Pleasant East</th>
+<th>Mount Pleasant West</th>
+<th>New Toronto</th>
+<th>Newtonbrook East</th>
+<th>Newtonbrook West</th>
+<th>Niagara</th>
+<th>North Riverdale</th>
+<th>North St. James Town</th>
+<th>Oakridge</th>
+<th>Oakwood Village</th>
+<th>O'Connor-Parkview</th>
+<th>Old East York</th>
+<th>Palmerston-Little Italy</th>
+<th>Parkwoods-Donalda</th>
+<th>Pelmo Park-Humberlea</th>
+<th>Playter Estates-Danforth</th>
+<th>Pleasant View</th>
+<th>Princess-Rosethorn</th>
+<th>Regent Park</th>
+<th>Rexdale-Kipling</th>
+<th>Rockcliffe-Smythe</th>
+<th>Roncesvalles</th>
+<th>Rosedale-Moore Park</th>
+<th>Rouge</th>
+<th>Runnymede-Bloor West Village</th>
+<th>Rustic</th>
+<th>Scarborough Village</th>
+<th>South Parkdale</th>
+<th>South Riverdale</th>
+<th>St.Andrew-Windfields</th>
+<th>Steeles</th>
+<th>Stonegate-Queensway</th>
+<th>Tam O'Shanter-Sullivan</th>
+<th>Taylor-Massey</th>
+<th>The Beaches</th>
+<th>Thistletown-Beaumond Heights</th>
+<th>Thorncliffe Park</th>
+<th>Trinity-Bellwoods</th>
+<th>University</th>
+<th>Victoria Village</th>
+<th>Waterfront Communities-The Island</th>
+<th>West Hill</th>
+<th>West Humber-Clairville</th>
+<th>Westminster-Branson</th>
+<th>Weston</th>
+<th>Weston-Pelham Park</th>
+<th>Wexford/Maryvale</th>
+<th>Willowdale East</th>
+<th>Willowdale West</th>
+<th>Willowridge-Martingrove-Richview</th>
+<th>Woburn</th>
+<th>Woodbine Corridor</th>
+<th>Woodbine-Lumsden</th>
+<th>Wychwood</th>
+<th>Yonge-Eglinton</th>
+<th>Yonge-St.Clair</th>
+<th>York University Heights</th>
+<th>Yorkdale-Glen Park</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>1130</th>
+<td>1131</td>
+<td>Income</td>
+<td>Low income in 2015</td>
+<td>Census Profile 98-316-X2016001</td>
+<td>Prevalence of low income based on the Low-inco...</td>
+<td>20.2</td>
+<td>21.3</td>
+<td>22.6</td>
+<td>8.2</td>
+<td>18.3</td>
+<td>13.7</td>
+<td>17</td>
+<td>37.7</td>
+<td>23.7</td>
+<td>18.4</td>
+<td>9.4</td>
+<td>28</td>
+<td>23.4</td>
+<td>14.5</td>
+<td>33</td>
+<td>24.5</td>
+<td>17</td>
+<td>8.8</td>
+<td>22.6</td>
+<td>24.7</td>
+<td>20.8</td>
+<td>14.2</td>
+<td>12.5</td>
+<td>6.2</td>
+<td>26</td>
+<td>19.5</td>
+<td>14.9</td>
+<td>17.9</td>
+<td>13.4</td>
+<td>14.2</td>
+<td>13.6</td>
+<td>23.5</td>
+<td>22.3</td>
+<td>17.1</td>
+<td>19.4</td>
+<td>18</td>
+<td>18.8</td>
+<td>10.5</td>
+<td>26</td>
+<td>23.2</td>
+<td>21.3</td>
+<td>9.7</td>
+<td>18.3</td>
+<td>34.7</td>
+<td>15.5</td>
+<td>10.7</td>
+<td>25.7</td>
+<td>19.7</td>
+<td>7.7</td>
+<td>29.6</td>
+<td>16.5</td>
+<td>11.1</td>
+<td>10.5</td>
+<td>21.9</td>
+<td>14.6</td>
+<td>19.7</td>
+<td>22.7</td>
+<td>15.7</td>
+<td>23.3</td>
+<td>15.8</td>
+<td>13.5</td>
+<td>18.3</td>
+<td>26.3</td>
+<td>33.2</td>
+<td>24.9</td>
+<td>4.5</td>
+<td>18.5</td>
+<td>23.5</td>
+<td>17.6</td>
+<td>6.7</td>
+<td>7.3</td>
+<td>6.9</td>
+<td>15.6</td>
+<td>17.6</td>
+<td>20.4</td>
+<td>15.2</td>
+<td>8.3</td>
+<td>22.1</td>
+<td>18.2</td>
+<td>23.8</td>
+<td>31.9</td>
+<td>25.3</td>
+<td>27.9</td>
+<td>10.3</td>
+<td>20.8</td>
+<td>24.8</td>
+<td>27.4</td>
+<td>26.3</td>
+<td>13.7</td>
+<td>10.9</td>
+<td>36.5</td>
+<td>42.6</td>
+<td>18.6</td>
+<td>22.5</td>
+<td>13.5</td>
+<td>13.8</td>
+<td>20.6</td>
+<td>11.4</td>
+<td>13.6</td>
+<td>17.5</td>
+<td>7.2</td>
+<td>42.3</td>
+<td>18.6</td>
+<td>22.8</td>
+<td>19.9</td>
+<td>10.2</td>
+<td>9.5</td>
+<td>6.9</td>
+<td>31.7</td>
+<td>32.4</td>
+<td>30.5</td>
+<td>18.7</td>
+<td>15.9</td>
+<td>21</td>
+<td>11.6</td>
+<td>23.8</td>
+<td>32.9</td>
+<td>9.4</td>
+<td>17.8</td>
+<td>45.5</td>
+<td>14.7</td>
+<td>22.4</td>
+<td>25.9</td>
+<td>16.5</td>
+<td>25.2</td>
+<td>15.8</td>
+<td>24.4</td>
+<td>29.6</td>
+<td>20.4</td>
+<td>19.2</td>
+<td>30.3</td>
+<td>27.1</td>
+<td>15</td>
+<td>27.2</td>
+<td>15.8</td>
+<td>15.2</td>
+<td>16.7</td>
+<td>12</td>
+<td>12.9</td>
+<td>24.4</td>
+<td>16.8</td>
+</tr>
+<tr>
+<th>1152</th>
+<td>1153</td>
+<td>Immigration and citizenship</td>
+<td>Immigrant status and period of immigration</td>
+<td>Census Profile 98-316-X2016001</td>
+<td>Immigrants</td>
+<td>1,266,005</td>
+<td>19,995</td>
+<td>15,095</td>
+<td>3,970</td>
+<td>8,270</td>
+<td>13,195</td>
+<td>8,020</td>
+<td>10,455</td>
+<td>12,625</td>
+<td>7,535</td>
+<td>6,805</td>
+<td>3,425</td>
+<td>15,865</td>
+<td>6,080</td>
+<td>12,705</td>
+<td>2,420</td>
+<td>8,555</td>
+<td>3,150</td>
+<td>4,790</td>
+<td>9,725</td>
+<td>3,770</td>
+<td>5,285</td>
+<td>2,885</td>
+<td>4,990</td>
+<td>10,935</td>
+<td>13,115</td>
+<td>7,485</td>
+<td>5,835</td>
+<td>6,095</td>
+<td>2,855</td>
+<td>5,575</td>
+<td>17,865</td>
+<td>14,685</td>
+<td>14,395</td>
+<td>19,515</td>
+<td>4,395</td>
+<td>5,920</td>
+<td>5,950</td>
+<td>13,000</td>
+<td>4,725</td>
+<td>9,785</td>
+<td>8,190</td>
+<td>5,805</td>
+<td>14,030</td>
+<td>4,975</td>
+<td>2,755</td>
+<td>17,790</td>
+<td>4,385</td>
+<td>3,130</td>
+<td>9,525</td>
+<td>7,670</td>
+<td>6,565</td>
+<td>7,015</td>
+<td>11,285</td>
+<td>4,645</td>
+<td>7,280</td>
+<td>9,440</td>
+<td>4,660</td>
+<td>7,795</td>
+<td>19,590</td>
+<td>4,550</td>
+<td>6,185</td>
+<td>9,465</td>
+<td>7,615</td>
+<td>11,425</td>
+<td>1,960</td>
+<td>2,410</td>
+<td>28,325</td>
+<td>7,075</td>
+<td>3,340</td>
+<td>3,180</td>
+<td>3,375</td>
+<td>4,835</td>
+<td>3,445</td>
+<td>26,900</td>
+<td>5,245</td>
+<td>3,890</td>
+<td>18,265</td>
+<td>13,425</td>
+<td>9,495</td>
+<td>6,470</td>
+<td>7,430</td>
+<td>21,500</td>
+<td>4,510</td>
+<td>11,295</td>
+<td>3,970</td>
+<td>9,945</td>
+<td>15,665</td>
+<td>8,995</td>
+<td>2,925</td>
+<td>9,485</td>
+<td>7,520</td>
+<td>9,965</td>
+<td>6,890</td>
+<td>3,025</td>
+<td>4,100</td>
+<td>17,210</td>
+<td>4,930</td>
+<td>1,795</td>
+<td>9,765</td>
+<td>3,360</td>
+<td>5,015</td>
+<td>4,975</td>
+<td>11,020</td>
+<td>4,395</td>
+<td>5,495</td>
+<td>25,575</td>
+<td>2,335</td>
+<td>5,105</td>
+<td>8,975</td>
+<td>8,920</td>
+<td>8,210</td>
+<td>8,835</td>
+<td>17,440</td>
+<td>8,635</td>
+<td>16,725</td>
+<td>8,705</td>
+<td>4,225</td>
+<td>5,465</td>
+<td>13,270</td>
+<td>5,810</td>
+<td>2,015</td>
+<td>9,185</td>
+<td>23,820</td>
+<td>13,345</td>
+<td>19,230</td>
+<td>18,155</td>
+<td>8,690</td>
+<td>5,370</td>
+<td>13,905</td>
+<td>31,040</td>
+<td>9,390</td>
+<td>10,030</td>
+<td>30,185</td>
+<td>2,935</td>
+<td>2,190</td>
+<td>4,345</td>
+<td>3,180</td>
+<td>3,580</td>
+<td>15,595</td>
+<td>7,265</td>
+</tr>
+<tr>
+<th>1336</th>
+<td>1337</td>
+<td>Visible minority</td>
+<td>Visible minority population</td>
+<td>Census Profile 98-316-X2016001</td>
+<td>Total visible minority population</td>
+<td>1,385,855</td>
+<td>26,365</td>
+<td>20,155</td>
+<td>2,490</td>
+<td>7,270</td>
+<td>12,700</td>
+<td>5,420</td>
+<td>15,925</td>
+<td>14,505</td>
+<td>8,250</td>
+<td>4,845</td>
+<td>3,760</td>
+<td>21,075</td>
+<td>5,740</td>
+<td>17,435</td>
+<td>2,960</td>
+<td>6,500</td>
+<td>2,765</td>
+<td>3,135</td>
+<td>11,630</td>
+<td>3,170</td>
+<td>3,585</td>
+<td>1,870</td>
+<td>5,810</td>
+<td>12,440</td>
+<td>16,110</td>
+<td>6,305</td>
+<td>6,570</td>
+<td>3,545</td>
+<td>2,480</td>
+<td>5,090</td>
+<td>19,025</td>
+<td>18,940</td>
+<td>12,275</td>
+<td>20,070</td>
+<td>3,630</td>
+<td>6,475</td>
+<td>3,230</td>
+<td>17,375</td>
+<td>6,365</td>
+<td>8,855</td>
+<td>5,130</td>
+<td>4,520</td>
+<td>17,220</td>
+<td>3,570</td>
+<td>1,775</td>
+<td>23,155</td>
+<td>5,625</td>
+<td>2,870</td>
+<td>12,030</td>
+<td>5,185</td>
+<td>4,465</td>
+<td>9,290</td>
+<td>12,785</td>
+<td>2,745</td>
+<td>8,140</td>
+<td>11,970</td>
+<td>4,095</td>
+<td>9,950</td>
+<td>16,035</td>
+<td>4,160</td>
+<td>4,700</td>
+<td>11,885</td>
+<td>10,520</td>
+<td>13,130</td>
+<td>1,100</td>
+<td>1,950</td>
+<td>33,540</td>
+<td>6,930</td>
+<td>3,110</td>
+<td>2,560</td>
+<td>2,935</td>
+<td>4,265</td>
+<td>2,305</td>
+<td>39,195</td>
+<td>4,300</td>
+<td>1,395</td>
+<td>25,165</td>
+<td>10,395</td>
+<td>12,865</td>
+<td>7,860</td>
+<td>9,005</td>
+<td>28,455</td>
+<td>3,825</td>
+<td>9,730</td>
+<td>3,615</td>
+<td>11,215</td>
+<td>13,825</td>
+<td>10,665</td>
+<td>2,815</td>
+<td>12,270</td>
+<td>10,250</td>
+<td>9,045</td>
+<td>6,975</td>
+<td>2,470</td>
+<td>2,950</td>
+<td>19,075</td>
+<td>4,675</td>
+<td>1,560</td>
+<td>10,155</td>
+<td>2,105</td>
+<td>7,470</td>
+<td>5,365</td>
+<td>10,225</td>
+<td>3,795</td>
+<td>3,740</td>
+<td>37,315</td>
+<td>1,600</td>
+<td>5,810</td>
+<td>12,065</td>
+<td>9,920</td>
+<td>11,225</td>
+<td>8,940</td>
+<td>22,075</td>
+<td>4,595</td>
+<td>20,325</td>
+<td>10,355</td>
+<td>2,980</td>
+<td>6,510</td>
+<td>16,495</td>
+<td>4,820</td>
+<td>2,205</td>
+<td>10,155</td>
+<td>28,895</td>
+<td>17,075</td>
+<td>26,945</td>
+<td>11,715</td>
+<td>10,755</td>
+<td>4,210</td>
+<td>15,285</td>
+<td>37,715</td>
+<td>9,630</td>
+<td>8,870</td>
+<td>40,510</td>
+<td>3,380</td>
+<td>2,435</td>
+<td>3,635</td>
+<td>3,155</td>
+<td>2,555</td>
+<td>19,135</td>
+<td>6,340</td>
+</tr>
+<tr>
+<th>1629</th>
+<td>1630</td>
+<td>Housing</td>
+<td>Household characteristics</td>
+<td>Census Profile 98-316-X2016001</td>
+<td>Renter</td>
+<td>525,835</td>
+<td>1,720</td>
+<td>2,250</td>
+<td>950</td>
+<td>9,870</td>
+<td>4,735</td>
+<td>2,800</td>
+<td>10,245</td>
+<td>3,930</td>
+<td>1,985</td>
+<td>2,595</td>
+<td>1,755</td>
+<td>3,765</td>
+<td>3,055</td>
+<td>4,880</td>
+<td>1,435</td>
+<td>2,900</td>
+<td>295</td>
+<td>3,855</td>
+<td>3,860</td>
+<td>3,590</td>
+<td>1,300</td>
+<td>3,235</td>
+<td>280</td>
+<td>13,865</td>
+<td>3,180</td>
+<td>3,010</td>
+<td>1,955</td>
+<td>2,055</td>
+<td>1,400</td>
+<td>2,060</td>
+<td>4,870</td>
+<td>3,400</td>
+<td>7,665</td>
+<td>6,855</td>
+<td>3,235</td>
+<td>4,190</td>
+<td>2,745</td>
+<td>4,355</td>
+<td>1,470</td>
+<td>4,795</td>
+<td>1,055</td>
+<td>2,175</td>
+<td>4,335</td>
+<td>3,590</td>
+<td>2,320</td>
+<td>4,810</td>
+<td>2,455</td>
+<td>905</td>
+<td>4,010</td>
+<td>7,295</td>
+<td>4,745</td>
+<td>410</td>
+<td>1,505</td>
+<td>1,620</td>
+<td>1,165</td>
+<td>2,400</td>
+<td>4,240</td>
+<td>3,140</td>
+<td>8,105</td>
+<td>2,460</td>
+<td>1,610</td>
+<td>2,980</td>
+<td>6,200</td>
+<td>3,735</td>
+<td>660</td>
+<td>1,280</td>
+<td>5,205</td>
+<td>2,740</td>
+<td>1,315</td>
+<td>1,750</td>
+<td>1,800</td>
+<td>4,145</td>
+<td>2,575</td>
+<td>4,020</td>
+<td>1,560</td>
+<td>1,105</td>
+<td>860</td>
+<td>8,635</td>
+<td>2,345</td>
+<td>7,630</td>
+<td>2,740</td>
+<td>5,455</td>
+<td>3,230</td>
+<td>13,070</td>
+<td>3,040</td>
+<td>2,155</td>
+<td>4,250</td>
+<td>9,395</td>
+<td>2,205</td>
+<td>8,610</td>
+<td>3,595</td>
+<td>4,085</td>
+<td>4,005</td>
+<td>1,320</td>
+<td>3,715</td>
+<td>8,020</td>
+<td>645</td>
+<td>1,920</td>
+<td>1,340</td>
+<td>595</td>
+<td>3,700</td>
+<td>1,685</td>
+<td>3,920</td>
+<td>3,885</td>
+<td>4,485</td>
+<td>2,205</td>
+<td>815</td>
+<td>2,265</td>
+<td>3,235</td>
+<td>9,865</td>
+<td>4,840</td>
+<td>2,140</td>
+<td>1,260</td>
+<td>3,665</td>
+<td>4,390</td>
+<td>4,215</td>
+<td>3,540</td>
+<td>1,245</td>
+<td>6,335</td>
+<td>3,305</td>
+<td>2,125</td>
+<td>4,350</td>
+<td>23,930</td>
+<td>4,055</td>
+<td>3,275</td>
+<td>6,165</td>
+<td>4,795</td>
+<td>1,750</td>
+<td>4,015</td>
+<td>8,505</td>
+<td>2,755</td>
+<td>3,925</td>
+<td>8,670</td>
+<td>2,275</td>
+<td>1,095</td>
+<td>3,040</td>
+<td>3,480</td>
+<td>4,315</td>
+<td>5,565</td>
+<td>2,045</td>
+</tr>
+<tr>
+<th>1703</th>
+<td>1704</td>
+<td>Education</td>
+<td>Highest certificate, diploma or degree</td>
+<td>Census Profile 98-316-X2016001</td>
+<td>No certificate, diploma or degree</td>
+<td>377340</td>
+<td>6550</td>
+<td>4035</td>
+<td>2005</td>
+<td>1585</td>
+<td>2295</td>
+<td>1665</td>
+<td>700</td>
+<td>1310</td>
+<td>1295</td>
+<td>1985</td>
+<td>1605</td>
+<td>4750</td>
+<td>2930</td>
+<td>6420</td>
+<td>1175</td>
+<td>2545</td>
+<td>615</td>
+<td>1665</td>
+<td>4270</td>
+<td>770</td>
+<td>2925</td>
+<td>490</td>
+<td>1295</td>
+<td>1220</td>
+<td>4215</td>
+<td>1735</td>
+<td>2165</td>
+<td>3390</td>
+<td>1440</td>
+<td>2500</td>
+<td>2505</td>
+<td>3975</td>
+<td>7105</td>
+<td>8590</td>
+<td>2150</td>
+<td>2290</td>
+<td>1725</td>
+<td>3925</td>
+<td>1870</td>
+<td>2675</td>
+<td>2435</td>
+<td>1730</td>
+<td>3825</td>
+<td>880</td>
+<td>690</td>
+<td>9560</td>
+<td>1960</td>
+<td>1080</td>
+<td>1210</td>
+<td>1535</td>
+<td>1575</td>
+<td>1625</td>
+<td>1865</td>
+<td>1555</td>
+<td>3495</td>
+<td>3635</td>
+<td>1125</td>
+<td>2385</td>
+<td>4440</td>
+<td>1695</td>
+<td>3640</td>
+<td>2990</td>
+<td>2850</td>
+<td>4170</td>
+<td>545</td>
+<td>855</td>
+<td>8055</td>
+<td>1050</td>
+<td>870</td>
+<td>945</td>
+<td>1125</td>
+<td>2385</td>
+<td>1320</td>
+<td>7345</td>
+<td>2395</td>
+<td>1070</td>
+<td>6320</td>
+<td>3570</td>
+<td>2465</td>
+<td>1680</td>
+<td>2810</td>
+<td>7895</td>
+<td>1015</td>
+<td>1500</td>
+<td>1610</td>
+<td>1485</td>
+<td>2450</td>
+<td>1280</td>
+<td>1040</td>
+<td>2040</td>
+<td>2270</td>
+<td>4450</td>
+<td>2905</td>
+<td>1340</td>
+<td>1795</td>
+<td>4140</td>
+<td>2210</td>
+<td>635</td>
+<td>2355</td>
+<td>955</td>
+<td>1870</td>
+<td>1960</td>
+<td>5695</td>
+<td>1800</td>
+<td>1045</td>
+<td>6580</td>
+<td>960</td>
+<td>2550</td>
+<td>2955</td>
+<td>3050</td>
+<td>4050</td>
+<td>1440</td>
+<td>4975</td>
+<td>2720</td>
+<td>4460</td>
+<td>2030</td>
+<td>1455</td>
+<td>2075</td>
+<td>3195</td>
+<td>3115</td>
+<td>520</td>
+<td>2930</td>
+<td>1900</td>
+<td>4990</td>
+<td>5905</td>
+<td>2745</td>
+<td>3630</td>
+<td>3095</td>
+<td>4395</td>
+<td>3110</td>
+<td>1405</td>
+<td>3440</td>
+<td>8850</td>
+<td>1430</td>
+<td>1015</td>
+<td>1860</td>
+<td>575</td>
+<td>460</td>
+<td>5125</td>
+<td>3445</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">neighbourhood_data</span> <span class="o">=</span> <span class="n">selected_rows</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">:]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">neighbourhood_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>(12, 140)
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -10452,16 +11171,562 @@ Name: count, dtype: int64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="EDA-Conclusions">EDA Conclusions<a class="anchor-link" href="#EDA-Conclusions">¶</a></h2><p>The exploratory analysis confirmed that the Toronto Neighbourhood Profiles dataset contains sufficient socioeconomic information to address all three research questions.</p>
-<p>Key findings include:</p>
-<ol>
-<li>The raw dataset contains over 2,300 socioeconomic indicators across 143 Toronto neighbourhoods.</li>
-<li>The previous modeling dataset contained only six indicators, limiting predictive capability.</li>
-<li>Additional indicators related to income, labour force participation, education, housing vulnerability, immigration, and family structure were identified.</li>
-<li>A final set of approximately 12 indicators was selected based on literature relevance and alignment with the research questions.</li>
-<li>These indicators will be used to construct the modeling dataset for predictive analysis, vulnerability scoring, clustering, and forecasting.</li>
-</ol>
-<p>The next phase of the project focuses on model development and evaluation.</p>
+<h2 id="Transpose-the-Dataset">Transpose the Dataset<a class="anchor-link" href="#Transpose-the-Dataset">¶</a></h2><p>The dataset is transposed so that:</p>
+<ul>
+<li>Rows represent neighbourhoods</li>
+<li>Columns represent indicators</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [44]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">analysis_df</span> <span class="o">=</span> <span class="n">neighbourhood_data</span><span class="o">.</span><span class="n">T</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">analysis_df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>(140, 12)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Rename-Indicator-Columns">Rename Indicator Columns<a class="anchor-link" href="#Rename-Indicator-Columns">¶</a></h2><p>Indicator row identifiers are replaced with descriptive variable names.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">analysis_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Lone_Parent_Families"</span><span class="p">,</span>
+    <span class="s2">"LIM_AT"</span><span class="p">,</span>
+    <span class="s2">"Immigrants"</span><span class="p">,</span>
+    <span class="s2">"Visible_Minority"</span><span class="p">,</span>
+    <span class="s2">"Renters"</span><span class="p">,</span>
+    <span class="s2">"Core_Housing_Need"</span><span class="p">,</span>
+    <span class="s2">"Unaffordable_Housing"</span><span class="p">,</span>
+    <span class="s2">"Participation_Rate"</span><span class="p">,</span>
+    <span class="s2">"Employment_Rate"</span><span class="p">,</span>
+    <span class="s2">"Unemployment_Rate"</span><span class="p">,</span>
+    <span class="s2">"No_Diploma"</span><span class="p">,</span>
+    <span class="s2">"Bachelors_Degree"</span><span class="p">]</span>
+
+<span class="n">analysis_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[45]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Lone_Parent_Families</th>
+<th>LIM_AT</th>
+<th>Immigrants</th>
+<th>Visible_Minority</th>
+<th>Renters</th>
+<th>Core_Housing_Need</th>
+<th>Unaffordable_Housing</th>
+<th>Participation_Rate</th>
+<th>Employment_Rate</th>
+<th>Unemployment_Rate</th>
+<th>No_Diploma</th>
+<th>Bachelors_Degree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Agincourt North</th>
+<td>21.3</td>
+<td>19,995</td>
+<td>26,365</td>
+<td>1,720</td>
+<td>6550</td>
+<td>4380</td>
+<td>2,220</td>
+<td>34.7</td>
+<td>55.4</td>
+<td>50</td>
+<td>9.8</td>
+<td>1650</td>
+</tr>
+<tr>
+<th>Agincourt South-Malvern West</th>
+<td>22.6</td>
+<td>15,095</td>
+<td>20,155</td>
+<td>2,250</td>
+<td>4035</td>
+<td>4210</td>
+<td>1,795</td>
+<td>38.2</td>
+<td>59</td>
+<td>53.2</td>
+<td>9.8</td>
+<td>1360</td>
+</tr>
+<tr>
+<th>Alderwood</th>
+<td>8.2</td>
+<td>3,970</td>
+<td>2,490</td>
+<td>950</td>
+<td>2005</td>
+<td>1660</td>
+<td>540</td>
+<td>21.7</td>
+<td>66.5</td>
+<td>62.4</td>
+<td>6.1</td>
+<td>670</td>
+</tr>
+<tr>
+<th>Annex</th>
+<td>18.3</td>
+<td>8,270</td>
+<td>7,270</td>
+<td>9,870</td>
+<td>1585</td>
+<td>9135</td>
+<td>2,420</td>
+<td>40.4</td>
+<td>70.6</td>
+<td>65.8</td>
+<td>6.7</td>
+<td>895</td>
+</tr>
+<tr>
+<th>Banbury-Don Mills</th>
+<td>13.7</td>
+<td>13,195</td>
+<td>12,700</td>
+<td>4,735</td>
+<td>2295</td>
+<td>6500</td>
+<td>2,115</td>
+<td>33.4</td>
+<td>59.9</td>
+<td>55.6</td>
+<td>7.2</td>
+<td>1255</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Convert-Values-to-Numeric-Format">Convert Values to Numeric Format<a class="anchor-link" href="#Convert-Values-to-Numeric-Format">¶</a></h2><p>Numeric values are converted from text format into machine-readable numeric variables.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [46]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">analysis_df</span> <span class="o">=</span> <span class="n">analysis_df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">analysis_df</span> <span class="o">=</span> <span class="n">analysis_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span>
+    <span class="n">errors</span><span class="o">=</span><span class="s2">"coerce"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [47]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">analysis_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Index: 140 entries, Agincourt North to Yorkdale-Glen Park
+Data columns (total 12 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   Lone_Parent_Families  140 non-null    float64
+ 1   LIM_AT                140 non-null    int64  
+ 2   Immigrants            140 non-null    int64  
+ 3   Visible_Minority      140 non-null    int64  
+ 4   Renters               140 non-null    int64  
+ 5   Core_Housing_Need     140 non-null    int64  
+ 6   Unaffordable_Housing  140 non-null    int64  
+ 7   Participation_Rate    140 non-null    float64
+ 8   Employment_Rate       140 non-null    float64
+ 9   Unemployment_Rate     140 non-null    float64
+ 10  No_Diploma            140 non-null    float64
+ 11  Bachelors_Degree      140 non-null    int64  
+dtypes: float64(5), int64(7)
+memory usage: 14.2+ KB
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Missing-Value-Assessment">Missing Value Assessment<a class="anchor-link" href="#Missing-Value-Assessment">¶</a></h2><p>The selected indicators are checked for missing values before export.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">analysis_df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[48]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>Lone_Parent_Families    0
+LIM_AT                  0
+Immigrants              0
+Visible_Minority        0
+Renters                 0
+Core_Housing_Need       0
+Unaffordable_Housing    0
+Participation_Rate      0
+Employment_Rate         0
+Unemployment_Rate       0
+No_Diploma              0
+Bachelors_Degree        0
+dtype: int64</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h1><p>This notebook prepared the Toronto Neighbourhood Profiles 2016 dataset for subsequent vulnerability analysis.</p>
+<p>A review of more than 1,600 available socioeconomic characteristics was conducted to identify indicators relevant to neighbourhood vulnerability. Twelve indicators were selected to represent five key dimensions:</p>
+<ul>
+<li>Income</li>
+<li>Education</li>
+<li>Labour Force Participation</li>
+<li>Housing</li>
+<li>Demographic Vulnerability</li>
+</ul>
+<p>The selected indicators were extracted from the raw dataset, transformed into a neighbourhood-level analytical table, and converted into machine-readable numeric variables.</p>
+<p>The final dataset contains:</p>
+<ul>
+<li>140 Toronto neighbourhoods</li>
+<li>12 vulnerability indicators</li>
+<li>No missing values in the selected variables</li>
+</ul>
+<p>This cleaned dataset provides the foundation for feature relationship analysis, dimensionality assessment, clustering, and vulnerability classification in subsequent notebooks</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [52]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">analysis_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span> <span class="s2">"neighbourhood_profiles_ml_ready.csv"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"CSV file exported successfully."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>CSV file exported successfully.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [63]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [64]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_check</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"neighbourhood_profiles_ml_ready.csv"</span><span class="p">,</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [65]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_check</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">"neighbourhood_profiles_ml_ready.csv"</span><span class="p">,</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_check</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">df_check</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>(140, 12)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[65]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Lone_Parent_Families</th>
+<th>LIM_AT</th>
+<th>Immigrants</th>
+<th>Visible_Minority</th>
+<th>Renters</th>
+<th>Core_Housing_Need</th>
+<th>Unaffordable_Housing</th>
+<th>Participation_Rate</th>
+<th>Employment_Rate</th>
+<th>Unemployment_Rate</th>
+<th>No_Diploma</th>
+<th>Bachelors_Degree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Agincourt North</th>
+<td>21.3</td>
+<td>19995</td>
+<td>26365</td>
+<td>1720</td>
+<td>6550</td>
+<td>4380</td>
+<td>2220</td>
+<td>34.7</td>
+<td>55.4</td>
+<td>50.0</td>
+<td>9.8</td>
+<td>1650</td>
+</tr>
+<tr>
+<th>Agincourt South-Malvern West</th>
+<td>22.6</td>
+<td>15095</td>
+<td>20155</td>
+<td>2250</td>
+<td>4035</td>
+<td>4210</td>
+<td>1795</td>
+<td>38.2</td>
+<td>59.0</td>
+<td>53.2</td>
+<td>9.8</td>
+<td>1360</td>
+</tr>
+<tr>
+<th>Alderwood</th>
+<td>8.2</td>
+<td>3970</td>
+<td>2490</td>
+<td>950</td>
+<td>2005</td>
+<td>1660</td>
+<td>540</td>
+<td>21.7</td>
+<td>66.5</td>
+<td>62.4</td>
+<td>6.1</td>
+<td>670</td>
+</tr>
+<tr>
+<th>Annex</th>
+<td>18.3</td>
+<td>8270</td>
+<td>7270</td>
+<td>9870</td>
+<td>1585</td>
+<td>9135</td>
+<td>2420</td>
+<td>40.4</td>
+<td>70.6</td>
+<td>65.8</td>
+<td>6.7</td>
+<td>895</td>
+</tr>
+<tr>
+<th>Banbury-Don Mills</th>
+<td>13.7</td>
+<td>13195</td>
+<td>12700</td>
+<td>4735</td>
+<td>2295</td>
+<td>6500</td>
+<td>2115</td>
+<td>33.4</td>
+<td>59.9</td>
+<td>55.6</td>
+<td>7.2</td>
+<td>1255</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
