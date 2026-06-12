@@ -1,5 +1,142 @@
 # CIND 820 Capstone Project
 
+## Project Overview
+
+This project investigates socioeconomic vulnerability across Toronto neighbourhoods using demographic, housing, education, labour market, and low-income indicators derived from the Toronto Neighbourhood Profiles dataset.
+
+The objective is to identify the socioeconomic characteristics associated with vulnerability, classify neighbourhoods with similar profiles, and support evidence-based planning and resource allocation.
+
+---
+
+## Research Questions
+
+### Research Question 1
+
+Which socioeconomic indicators are most strongly associated with neighbourhood-level vulnerability and low-income prevalence in Toronto?
+
+### Research Question 2
+
+Can Toronto neighbourhoods be grouped into meaningful vulnerability profiles using dimensionality reduction and clustering techniques?
+
+### Research Question 3
+
+How may neighbourhood vulnerability patterns evolve over time based on future socioeconomic trends?
+
+---
+
+## Completed Analysis
+
+### Notebook 1: Exploratory Data Analysis and Indicator Selection
+
+* Data cleaning and preparation
+* Indicator selection
+* Missing value assessment
+* Descriptive statistics
+* Distribution analysis
+* Initial correlation analysis
+* Creation of machine-learning-ready dataset
+
+### Notebook 2: Feature Relationship Analysis and Dimensionality Assessment
+
+* Correlation matrix analysis
+* Employment and unemployment indicator validation
+* Multicollinearity assessment using Variance Inflation Factor (VIF)
+* Feature relationship exploration
+* Dimensionality assessment for PCA preparation
+
+### Notebook 3: Dimensionality Reduction and Vulnerability Classification
+
+* Data standardization
+* Principal Component Analysis (PCA)
+* Explained variance assessment
+* Principal component interpretation
+* K-Means clustering
+* Vulnerability classification
+* Cluster profiling and neighbourhood segmentation
+
+---
+
+## Key Findings
+
+### PCA Results
+
+The first three principal components explain approximately 88.6% of the total variance:
+
+* PC1: Socioeconomic vulnerability dimension
+* PC2: Education and labour market participation dimension
+* PC3: Housing affordability and low-income dimension
+
+### Clustering Results
+
+Four neighbourhood clusters were identified:
+
+* Cluster 0: Moderate vulnerability neighbourhoods
+* Cluster 1: High vulnerability neighbourhoods
+* Cluster 2: Lower vulnerability neighbourhoods
+* Cluster 3: High-income and highly educated neighbourhoods
+
+---
+
+## Repository Structure
+
+data/
+
+* 01_EDA_and_Indicator_Selection.ipynb
+* 02_Feature_Relationship_Analysis_Dimensionality.ipynb
+* 03_Dimensionality_reduction_and_Vulnerability_Classification.ipynb
+* neighbourhood_profiles_ml_ready.csv
+* toronto_neighbourhood_analysis_v2.csv
+* toronto_neighbourhood_clusters.csv
+
+reports/
+
+* 01_EDA_and_Indicator_Selection.html
+* 02_Feature_Relationship_Analysis_Dimensionality.html
+* 03_Dimensionality_reduction_and_Vulnerability_Classification.html
+
+---
+
+## Analyst Role and Decision Context
+
+This project simulates the work of a municipal socioeconomic data analyst supporting:
+
+* Toronto city planners
+* Housing policy analysts
+* Community development agencies
+* Nonprofit organizations
+
+The results support decisions related to:
+
+* Affordable housing prioritization
+* Community investment planning
+* Employment support allocation
+* Early intervention strategies
+* Neighbourhood vulnerability monitoring
+
+---
+
+## Current Status
+
+Completed:
+
+* Exploratory Data Analysis
+* Indicator Selection
+* Feature Relationship Analysis
+* PCA
+* K-Means Clustering
+* Vulnerability Classification
+
+Planned:
+
+* Predictive modelling
+* Forecasting analysis
+* Final project report
+* Interactive visualizations
+
+* (old version)
+
+# CIND 820 Capstone Project
+
 ## Project Summary
 
 This project investigates socioeconomic vulnerability and neighborhood level low-income prevelance 
