@@ -119,10 +119,11 @@ Completed:
 
 Planned:
 
-* Predictive modelling
-* Forecasting analysis
-* Final project report
-* Interactive visualizations
+Integrate 2006 Toronto Neighbourhood Profiles
+Longitudinal analysis
+Predictive modelling
+Vulnerability forecasting
+Interactive visualizations
 
 ---
 ## Analyst Role and Decision Context
