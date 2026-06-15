@@ -94,24 +94,15 @@ reports/
 * 02_Feature_Relationship_Analysis_Dimensionality.html
 * 03_Dimensionality_reduction_and_Vulnerability_Classification.html
 
----
+Notebook 1:
+EDA, cleaning, indicator selection
 
-## Analyst Role and Decision Context
+Notebook 2:
+Correlation analysis, multicollinearity assessment (VIF),
+PCA dimensionality reduction
 
-This project simulates the work of a municipal socioeconomic data analyst supporting:
-
-* Toronto city planners
-* Housing policy analysts
-* Community development agencies
-* Nonprofit organizations
-
-The results support decisions related to:
-
-* Affordable housing prioritization
-* Community investment planning
-* Employment support allocation
-* Early intervention strategies
-* Neighbourhood vulnerability monitoring
+Notebook 3:
+K-Means clustering and neighbourhood vulnerability profiling
 
 ---
 
@@ -133,7 +124,26 @@ Planned:
 * Final project report
 * Interactive visualizations
 
-* (old version)
+---
+## Analyst Role and Decision Context
+
+This project simulates the work of a municipal socioeconomic data analyst supporting:
+
+* Toronto city planners
+* Housing policy analysts
+* Community development agencies
+* Nonprofit organizations
+
+The results support decisions related to:
+
+* Affordable housing prioritization
+* Community investment planning
+* Employment support allocation
+* Early intervention strategies
+* Neighbourhood vulnerability monitoring
+
+---
+(Version_1)
 
 # CIND 820 Capstone Project
 
