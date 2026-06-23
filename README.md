@@ -1,5 +1,6 @@
 # CIND 820 Capstone Project
 
+<<<<<<< HEAD
 ## Project Overview
 
 This project investigates socioeconomic vulnerability across Toronto neighbourhoods using demographic, housing, education, labour market, and low-income indicators derived from the Toronto Neighbourhood Profiles dataset.
@@ -149,115 +150,208 @@ The results support decisions related to:
 # CIND 820 Capstone Project
 
 ## Project Summary
+=======
+## Predictive Socioeconomic Modeling: Forecasting Neighbourhood-Level Low-Income Prevalence in Toronto
+>>>>>>> e7883f9 (Updated README with completed project progress)
 
-This project investigates socioeconomic vulnerability and neighborhood level low-income prevelance 
+### Project Overview
+
+This capstone project investigates socioeconomic vulnerability across Toronto neighbourhoods using open data from the City of Toronto Neighbourhood Profiles dataset. The objective is to identify the socioeconomic factors associated with low-income prevalence, classify neighbourhoods based on vulnerability characteristics, and develop a foundation for future predictive modelling.
+
+The project supports evidence-based decision making for:
+
+* Toronto City Planners
+* Housing Policy Analysts
+* Real Estate/ Business investors
+* Community Development Agencies
+* Non-Profit Organizations
+
+---
 
 ## Research Questions
 
-### Research Question #1. 
+### RQ1: Socioeconomic Drivers of Vulnerability
 
-Which socioeconomic variables are the strongest predictors of neighborhood-level low-income prevalence in Toronto?
+Which socioeconomic variables are most strongly associated with neighbourhood-level low-income prevalence in Toronto?
 
-What results will I get?
+### RQ2: Neighbourhood Vulnerability Classification
 
-The analysis will identify which variables have the greatest influence on low-income prevalence, such as:
+Which Toronto neighbourhoods demonstrate the highest socioeconomic vulnerability based on income, education, employment, housing, and demographic indicators?
 
-- Unemployment rate
-- Median household income
-- Education attainment
-- Housing affordability indicators
-- Labour force participation
+### RQ3: Future Vulnerability Trends
 
-Modeeling: will be using correlation analysis, Logistic Regression coefficients, and Random Forest feature importance scores, I will rank these variables according to their predictive power.
+How may low-income prevalence and housing burden indicators change across Toronto neighbourhoods over time?
 
-I will:
-Conduct exploratory data analysis (EDA).
-Examine correlations between predictors and low-income prevalence.
-Build Logistic Regression and Random Forest models.
-Compare feature importance across models.
-Validate model performance using accuracy, precision, recall, and F1-score.
+Future project phases will incorporate historical neighbourhood profile datasets (2006 and 2011) to support longitudinal analysis and predictive modelling.
 
-What will I do with these results?
-I will identify the socioeconomic factors most strongly associated with poverty risk.
+---
 
-How could these results change current actions?
-Instead of distributing (financial) resources based mainly on historical poverty rates, organizations can focus on the underlying drivers of vulnerability.
+## Dataset
 
+### Primary Dataset
 
-### Research Question #2
+**Toronto Neighbourhood Profiles (2016)**
 
-Which Toronto neighborhoods demonstrate the highest predicted socioeconomic vulnerability based on income, employment, education, and housing indicators?
+Source:
+https://open.toronto.ca/
 
-The analysis will produce:
+The dataset contains socioeconomic, demographic, housing, employment, education, and income indicators for Toronto neighbourhoods.
 
-A vulnerability score for each neighborhood.
-Risk classifications (Low, Medium, High).
-Geographic maps showing vulnerable areas.
-Neighborhood clusters with similar socioeconomic characteristics.
+### Key Indicators Used
 
-Modelling:
-- Build classification models.
-- Create vulnerability risk scores.
-- Use clustering techniques (K-Means and/or Hierarchical Clustering).
-- Visualize results through geographic maps and dashboards.
-- Compare neighborhoods across multiple indicators.
+* Low Income Measure After Tax (LIM-AT)
+* Immigrant Population
+* Visible Minority Population
+* Renters
+* No Diploma
+* Bachelor's Degree
+* Core Housing Need
+* Unaffordable Housing
+* Labour Force Participation Rate
+* Employment Rate
+* Unemployment Rate
+* Lone Parent Families
 
-What will I do with these results?
-I will identify which neighborhoods are most vulnerable and require priority intervention.
+---
 
+## Methodology
 
-How could these results change current actions?
-Resources could be allocated more strategically.
+### Notebook 1 – Exploratory Data Analysis and Indicator Selection
 
-### Research Question 3
+Objectives:
 
-How are low-income prevalence and housing burden indicators expected to change across Toronto neighborhoods over time?
+* Data cleaning and preparation
+* Variable selection
+* Missing value assessment
+* Correlation analysis
+* Dataset restructuring
+* Automated data profiling
 
-What results will I get?
+Outputs:
 
-Forecasting models will estimate:
-Future low-income prevalence.
-Future housing burden trends.
-Neighborhoods likely to improve.
-Neighborhoods likely to experience increasing vulnerability.
-How will I ensure I answer it fully?
+* Cleaned modelling dataset
+* EDA report
+* Indicator selection justification
 
-Modelling:
-- Analyze historical trends.
-- Develop forecasting models.
-- Compare projected outcomes across neighborhoods.
-- Evaluate forecast accuracy.
-- Visualize trends through forecasting dashboards.
+---
 
-What will I do with these results?
+### Notebook 2 – Feature Relationship Analysis and Dimensionality Reduction
 
-I will identify emerging socioeconomic risks before they become major problems.
+Objectives:
 
-How could these results change current actions?
+* Feature standardization
+* Principal Component Analysis (PCA)
+* Scree Plot analysis
+* Explained variance analysis
+* Component interpretation
 
-Decision-makers can move from reactive planning to proactive planning.
+Results:
 
-## Analyst Role and Decision Context
+* First 3 principal components retained
+* Approximately 89% of variance explained
+* Reduced dimensionality while preserving socioeconomic information
 
-This project simulates the role of a municipal socioeconomic data analyst supporting:
-- Toronto city planners
-- Housing policy analysts
-- Community development agencies
-- Nonprofit organizations
+---
 
-The analysis supports decisions related to:
-- Affordable housing prioritization
-- Employment support allocation
-- Community investment planning
-- Early intervention strategies for vulnerable neighborhoods
+### Notebook 3 – Vulnerability Classification and Clustering
 
-## ## Expected Project Impact (Conclusion)
+Objectives:
 
-Research Question 1 identifies the drivers of poverty risk.
+* PCA-based neighbourhood scoring
+* K-Means clustering
+* Elbow Method optimization
+* Cluster interpretation
 
-Research Question 2 identifies which neighborhoods are most vulnerable today.
+Results:
 
-Research Question 3 forecasts which neighborhoods may become more vulnerable in the future.
+* Four neighbourhood vulnerability clusters identified
+* Distinct socioeconomic profiles observed across clusters
+* Cluster summaries generated for policy interpretation
 
-Together, these findings support evidence-based planning, targeted resource allocation, and proactive policy intervention across Toronto communities.
+---
 
+## Repository Structure
+
+```text
+CIND820-Capstone-Project/
+
+├── data/
+│   ├── 01_EDA_and_Indicator_Selection.ipynb
+│   ├── 02_Feature_Relationship_Analysis_Dimensionality.ipynb
+│   ├── 03_Dimensionality_reduction_and_Vulnerability_Classification.ipynb
+│   ├── neighbourhood_profiles_ml_ready.csv
+│   ├── toronto_neighbourhood_analysis_v2.csv
+│   └── toronto_neighbourhood_clusters.csv
+
+├── reports/
+│   ├── 01_EDA_and_Indicator_Selection.html
+│   ├── 02_Feature_Relationship_Analysis_Dimensionality.html
+│   └── 03_Dimensionality_reduction_and_Vulnerability_Classification.html
+
+├── visualizations/
+
+├── proposal/
+
+├── docs/
+│   ├── Interim_Report_Submitted.pdf
+│   └── Interim_Report_Revised_After_Professor_Feedback.pdf
+
+└── README.md
+```
+
+---
+
+## Software and Libraries
+
+Python Version:
+
+* Python 3.11
+
+Key Libraries:
+
+* pandas
+* numpy
+* matplotlib
+* seaborn
+* scikit-learn
+* ydata-profiling
+
+---
+
+## Reproducibility
+
+Recommended execution order:
+
+1. Notebook 1 – Data Cleaning and EDA
+2. Notebook 2 – PCA and Feature Analysis
+3. Notebook 3 – Vulnerability Classification and Clustering
+
+Generated reports are available in the reports/ directory.
+
+---
+
+## Data Privacy and Ethics
+
+This project uses publicly available aggregate neighbourhood-level data.
+
+* No personally identifiable information (PII) is included.
+* Results are reported at the neighbourhood level.
+* Analysis follows ethical principles outlined in the Tri-Council Policy Statement (TCPS 2).
+
+---
+
+## Future Work
+
+Future phases will expand the analysis through:
+
+* Integration of 2006 and 2011 Toronto Neighbourhood Profile datasets.
+* Longitudinal analysis of socioeconomic vulnerability.
+* Predictive modelling of low-income prevalence.
+* Integration of housing affordability and labour market datasets.
+* Development of vulnerability forecasting models.
+
+---
+
+## GenAI Declaration
+
+Generative AI tools were used to assist with code troubleshooting, documentation drafting, report organization, and explanation of statistical methods. All analytical decisions, data preparation, modelling procedures, interpretation of results, and final report content were reviewed, verified, and approved by the project author. 
