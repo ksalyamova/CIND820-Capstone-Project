@@ -1,12 +1,19 @@
 # CIND 820 Capstone Project
 
-<<<<<<< HEAD
 ## Project Overview
 
 This project investigates socioeconomic vulnerability across Toronto neighbourhoods using demographic, housing, education, labour market, and low-income indicators derived from the Toronto Neighbourhood Profiles dataset.
 
 The objective is to identify the socioeconomic characteristics associated with vulnerability, classify neighbourhoods with similar profiles, and support evidence-based planning and resource allocation.
 
+## Current Project Status
+
+- ✅ 2016 Toronto Neighbourhood Profile dataset fully prepared and analyzed.
+- ✅ Completed EDA, PCA, clustering, and feature engineering for the 2016 dataset.
+- ✅ 2006 dataset assessed and cleaned for feature compatibility.
+- ??? Several important socioeconomic indicators (labour and housing) are unavailable at the neighbourhood level in the 2006 dataset, limiting its suitability for predictive modelling.
+-  2011 dataset is currently being prepared for feature engineering and predictive modelling.
+- Next step: build predictive machine learning models using comparable neighbourhood-level
 ---
 
 ## Research Questions
@@ -150,9 +157,7 @@ The results support decisions related to:
 # CIND 820 Capstone Project
 
 ## Project Summary
-=======
 ## Predictive Socioeconomic Modeling: Forecasting Neighbourhood-Level Low-Income Prevalence in Toronto
->>>>>>> e7883f9 (Updated README with completed project progress)
 
 ### Project Overview
 
