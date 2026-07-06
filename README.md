@@ -1,4 +1,147 @@
-# CIND 820 Capstone Project
+Version #3
+
+## Predictive Socioeconomic Modelling of Toronto Neighbourhood Vulnerability
+
+## Project Overview
+
+This capstone project investigates neighbourhood-level socioeconomic vulnerability across Toronto using the Toronto Neighbourhood Profiles dataset.
+
+The objective is to identify the socioeconomic factors associated with neighbourhood vulnerability, classify neighbourhoods into statistically distinct vulnerability profiles, and develop predictive machine learning models capable of estimating neighbourhood low-income prevalence.
+---
+## Research Questions
+
+### Research Question 1
+
+Which socioeconomic indicators are most strongly associated with neighbourhood-level vulnerability and low-income prevalence in Toronto?
+
+### Research Question 2
+
+Can Toronto neighbourhoods be grouped into statistically distinct vulnerability profiles based on socioeconomic indicators?
+
+### Research Question 3
+
+How accurately can neighbourhood socioeconomic vulnerability be predicted using selected socioeconomic indicators?
+
+---
+
+## Repository Structure
+
+```
+CIND820-CAPSTONE-PROJECT
+
+data/
+    raw/
+    processed/
+
+notebooks/
+    01_2016_dataset/
+        01_EDA_and_Feature_Selection.ipynb
+        02_Feature_Relationship_Analysis.ipynb
+        03_PCA_and_Neighbourhood_Vulnerability_Assessment.ipynb
+        04_Predictive_Modelling.ipynb
+
+reports/
+
+visualizations/
+
+proposal/
+
+README.md
+```
+---
+
+## Dataset
+
+Source:
+
+City of Toronto Open Data
+Toronto Neighbourhood Profiles (2016)
+---
+
+## Project Workflow
+
+Notebook 1
+
+- Data cleaning
+- Feature engineering
+- Variable selection
+
+Notebook 2
+
+- Exploratory Data Analysis
+- Correlation analysis
+- ANOVA
+- VIF analysis
+- Statistical assessment
+
+Notebook 3
+
+- Principal Component Analysis (PCA)
+- K-Means clustering
+- Vulnerability profile identification
+
+Notebook 4
+
+- Linear Regression
+- Random Forest Regression
+- Model comparison
+- Predictive modelling
+
+---
+
+## Machine Learning Models
+
+- Linear Regression
+- Random Forest Regression
+
+Evaluation metrics include:
+
+- R²
+- Adjusted R²
+- MAE
+- RMSE
+- MSE
+
+---
+
+## Key Results
+
+Linear Regression achieved the strongest predictive performance:
+
+- R² = 0.871
+- Adjusted R² = 0.823
+- MAE = 2.196
+- RMSE = 2.815
+
+The findings demonstrate that neighbourhood socioeconomic vulnerability can be accurately predicted using selected socioeconomic indicators.
+
+---
+
+## Software
+
+Python
+
+Pandas
+
+NumPy
+
+Matplotlib
+
+Seaborn
+
+Scikit-Learn
+
+Jupyter Notebook
+
+VS Code
+
+---
+
+## AI Productivity Declaration
+
+Generative AI (ChatGPT) was used to assist with code refinement, debugging, documentation, markdown preparation, and project organization.
+
+All analytical decisions, data preparation, statistical interpretation, and model evaluation were reviewed, validated, and finalized by the project author. CIND 820 Capstone Project
 
 ## Project Overview
 
@@ -6,6 +149,7 @@ This project investigates socioeconomic vulnerability across Toronto neighbourho
 
 The objective is to identify the socioeconomic characteristics associated with vulnerability, classify neighbourhoods with similar profiles, and support evidence-based planning and resource allocation.
 
+Version#2
 ## Current Project Status
 
 - ✅ 2016 Toronto Neighbourhood Profile dataset fully prepared and analyzed.
@@ -20,15 +164,15 @@ The objective is to identify the socioeconomic characteristics associated with v
 
 ### Research Question 1
 
-Which socioeconomic indicators are most strongly associated with neighbourhood-level vulnerability and low-income prevalence in Toronto?
+Which socioeconomic indicators are most strongly(quantify) associated with neighbourhood-level vulnerability and low-income prevalence in Toronto?
 
 ### Research Question 2
 
-Can Toronto neighbourhoods be grouped into meaningful vulnerability profiles using dimensionality reduction and clustering techniques?
+Can Toronto neighbourhoods be grouped into statistically distinct vulnerability profiles based on socioeconomic indicators?
 
 ### Research Question 3
 
-How may neighbourhood vulnerability patterns evolve over time based on future socioeconomic trends?
+How may neighbourhood vulnerability(quantify) patterns evolve over time based on future socioeconomic trends?
 
 ---
 
