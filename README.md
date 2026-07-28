@@ -1,38 +1,44 @@
-# Predictive Socioeconomic Modelling and Temporal Validation of Neighbourhood-Level Low-Income Prevalence in Toronto
+# Predictive Socioeconomic Modeling: Forecasting Neighborhood-Level Low-Income Prevalence Across Toronto Using Statistical Analysis and Machine Learning
 
-## CIND820 Capstone Project
-### Toronto Metropolitan University (TMU) – The Chang School of Continuing Education
+https://github.com/ksalyamova/CIND820-Capstone-Project
 
-**Author:** Kamola Salyamova
+## Overview
 
----
+This capstone project develops a predictive analytics framework to investigate neighbourhood-level socioeconomic vulnerability across Toronto using statistical analysis and machine learning techniques.
 
-# Project Overview
+Using publicly available data from the City of Toronto Open Data Portal, the project examines the relationships between demographic, labour market, educational, housing, and income indicators to identify the factors associated with neighbourhood-level low-income prevalence.
 
-Neighbourhood-level socioeconomic vulnerability is influenced by a complex combination of demographic, educational, employment, housing, and income-related factors. Understanding these relationships is essential for evidence-based municipal planning, resource allocation, and community development.
+The project follows a complete data science workflow including:
 
-This capstone project investigates the socioeconomic factors associated with neighbourhood-level low-income prevalence across Toronto using the City of Toronto Neighbourhood Profiles (2011 and 2016) datasets and a combination of statistical analysis and machine learning techniques.
+- Data Preparation
+- Exploratory Data Analysis (EDA)
+- Correlation Analysis
+- Multicollinearity Assessment (VIF)
+- Feature Selection
+- Principal Component Analysis (PCA)
+- K-Means Clustering
+- One-Way ANOVA
+- Multiple Linear Regression
+- Random Forest Regression
+- Cross Validation
+- Temporal Model Validation
 
-The project follows a complete analytical workflow beginning with data preparation and exploratory data analysis, followed by feature relationship analysis, dimensionality reduction, neighbourhood vulnerability assessment, predictive modelling, historical dataset preparation, temporal comparative analysis, and temporal model validation.
-
-In addition to identifying the socioeconomic indicators associated with neighbourhood vulnerability, the project evaluates whether historical socioeconomic data can be used to accurately predict future neighbourhood-level low-income prevalence by training predictive models using the 2011 dataset and evaluating their performance on the independent 2016 dataset.
-
-The analyses were completed as part of the Toronto Metropolitan University (TMU) Chang School **CIND820 Capstone Project**.
+The final outcome is a reproducible machine learning framework capable of supporting evidence-based municipal planning and socioeconomic decision-making.
 
 ---
 
 # Business Problem
 
-Municipal planners, housing policy analysts, community development agencies, and non-profit organizations require reliable evidence-based methods to identify neighbourhoods experiencing elevated socioeconomic vulnerability.
+Municipal planners, housing policy analysts, and community organizations require reliable analytical methods to identify neighbourhoods experiencing elevated socioeconomic vulnerability.
 
-Although neighbourhood profiles provide extensive socioeconomic information, they are primarily descriptive and do not quantify complex relationships among socioeconomic indicators or evaluate their predictive value.
+Although Toronto's Neighbourhood Profiles contain extensive socioeconomic information, the datasets are descriptive and do not directly support predictive decision-making.
 
-This project develops a reproducible machine learning framework to support evidence-based decision-making by:
+This project transforms publicly available socioeconomic data into predictive models capable of:
 
-- identifying socioeconomic indicators associated with neighbourhood-level low-income prevalence;
-- grouping neighbourhoods into statistically distinct socioeconomic vulnerability profiles;
-- developing predictive models capable of estimating neighbourhood-level low-income prevalence; and
-- evaluating whether predictive relationships remain reliable over time through temporal model validation.
+- identifying neighbourhoods at greater socioeconomic risk;
+- quantifying the factors associated with low-income prevalence;
+- classifying neighbourhoods into meaningful vulnerability profiles; and
+- evaluating whether historical socioeconomic indicators remain reliable predictors of future neighbourhood conditions.
 
 ---
 
@@ -40,27 +46,42 @@ This project develops a reproducible machine learning framework to support evide
 
 The objectives of this project are to:
 
-- prepare machine-learning-ready neighbourhood datasets from the Toronto Neighbourhood Profiles;
-
-- identify and quantify the socioeconomic indicators most strongly associated with neighbourhood-level low-income prevalence;
-
-- classify Toronto neighbourhoods into statistically distinct socioeconomic vulnerability profiles;
-
-- develop predictive models capable of estimating neighbourhood-level low-income prevalence;
-
-- compare predictive model performance using multiple evaluation metrics;
-
-- evaluate whether historical socioeconomic indicators remain reliable predictors of future neighbourhood-level low-income prevalence; and
-
-- provide evidence-based insights to support municipal planning, housing policy, and community investment decisions.
+- Prepare machine-learning-ready datasets
+- Identify socioeconomic indicators associated with neighbourhood low-income prevalence
+- Reduce dimensionality using Principal Component Analysis (PCA)
+- Identify neighbourhood vulnerability profiles using K-Means clustering
+- Develop predictive regression models
+- Compare model performance using multiple evaluation metrics
+- Evaluate temporal model generalizability using historical data
+- Support evidence-based municipal planning
 
 ---
 
-# Analyst Role
+# Research Questions
 
-This project simulates the role of a **Municipal Socioeconomic Data Analyst** responsible for supporting evidence-based planning and policy development.
+### Research Question 1
 
-The intended stakeholders include:
+Which socioeconomic indicators are most strongly associated with neighbourhood-level low-income prevalence across Toronto?
+
+---
+
+### Research Question 2
+
+Can Toronto neighbourhoods be grouped into statistically distinct socioeconomic vulnerability profiles?
+
+---
+
+### Research Question 3
+
+Which predictive modelling approach provides the most accurate, efficient, and stable estimation of neighbourhood-level low-income prevalence?
+
+---
+
+# Stakeholders
+
+This project was developed from the perspective of a Municipal Socioeconomic Data Analyst.
+
+Primary stakeholders include:
 
 - Toronto City Planners
 - Housing Policy Analysts
@@ -68,130 +89,192 @@ The intended stakeholders include:
 - Non-Profit Organizations
 - Municipal Decision Makers
 
-The project supports decisions related to:
+The results support:
 
-- affordable housing prioritization;
-- neighbourhood investment planning;
-- employment support allocation;
-- identification of vulnerable neighbourhoods;
-- long-term socioeconomic monitoring; and
-- strategic resource allocation.
+- Affordable housing prioritization
+- Resource allocation
+- Community investment planning
+- Employment support initiatives
+- Long-term socioeconomic monitoring
 
 ---
 
-# Datasets
+# Dataset
 
-## Primary Data Source
+**Source**
 
-**City of Toronto Open Data Portal**
+City of Toronto Open Data Portal
 
-## Datasets Used
+Datasets Used
 
 - Toronto Neighbourhood Profiles (2016)
 - Toronto Neighbourhood Profiles (2011)
 
-### 2016 Dataset
+The 2016 dataset was used for:
 
-The 2016 dataset serves as the primary analytical dataset and was used for:
-
-- Exploratory Data Analysis (EDA)
-- Feature Selection
+- EDA
 - Statistical Analysis
-- Dimensionality Reduction
+- PCA
 - Clustering
 - Predictive Modelling
-- Geographic Neighbourhood Vulnerability Assessment
 
-### 2011 Dataset
-
-The 2011 dataset was prepared as a historical machine-learning-ready dataset and was used to evaluate the temporal generalizability of the predictive model.
-
-Specifically, the 2011 dataset was used to:
-
-- prepare a historical ML-ready dataset;
-- identify variables common to both datasets;
-- train the Linear Regression model; and
-- evaluate predictive performance using the independent 2016 dataset.
+The 2011 dataset was prepared for temporal validation to evaluate whether historical socioeconomic indicators successfully predict neighbourhood conditions in 2016.
 
 ---
 
-# Dependent Variable
+# Target Variable
 
-The dependent variable used throughout the project is:
+**Dependent Variable**
 
-**Low_Income_AfterTax_Pct (LIM-AT)**
+Low_Income_AfterTax_Pct (LIM-AT)
 
-Low_Income_AfterTax_Pct represents the percentage of individuals living below the Low-Income Measure After Tax (LIM-AT) and serves as the primary indicator of neighbourhood socioeconomic vulnerability throughout the project.
-
----
-
-# Research Questions
-
-## Research Question 1
-
-**Which socioeconomic indicators are most strongly associated (quantified) with neighbourhood-level low-income prevalence in Toronto?**
-
-This research question investigates the strength of the relationships between selected socioeconomic indicators and neighbourhood-level low-income prevalence.
-
-**Addressed in:**
-
-- Notebook 1 – EDA and Feature Selection
-- Notebook 2 – Feature Relationship Analysis
+The percentage of individuals living below the Low Income Measure After Tax (LIM-AT), representing neighbourhood socioeconomic vulnerability.
 
 ---
 
-## Research Question 2
+# Analytical Workflow
 
-**Can Toronto neighbourhoods be grouped into statistically distinct socioeconomic vulnerability profiles based on selected socioeconomic indicators?**
+## Notebook 1
 
-This research question investigates whether neighbourhoods exhibit distinct socioeconomic vulnerability patterns and whether meaningful groups can be identified.
+### Exploratory Data Analysis and Feature Selection
 
-**Addressed in:**
+Topics
 
-- Notebook 3 – PCA and Neighborhood Vulnerability Assessment
-
----
-
-## Research Question 3
-
-**Can neighbourhood-level low-income prevalence be accurately predicted using selected socioeconomic indicators?**
-
-### (a) Predictive Model Development
-
-**Which predictive model provides the most accurate estimates of neighbourhood-level low-income prevalence using the 2016 Toronto Neighbourhood Profiles dataset?**
-
-**Addressed in:**
-
-- Notebook 4 – Predictive Modelling of Neighborhood Vulnerability
+- Data Cleaning
+- Missing Value Assessment
+- Descriptive Statistics
+- Distribution Analysis
+- Feature Selection
 
 ---
 
-### (b) Temporal Model Validation
+## Notebook 2
 
-**To what extent can a model trained using the 2011 Toronto Neighbourhood Profiles dataset accurately predict neighbourhood-level low-income prevalence in the independent 2016 dataset?**
+### Feature Relationship Analysis
 
-This component evaluates whether historical socioeconomic indicators remain reliable predictors of future neighbourhood-level low-income prevalence.
+Topics
 
-**Addressed in:**
-
-- Notebook 5 – 2011 Machine Learning Dataset Preparation for Temporal Comparative Analysis
-- Notebook 6 – Temporal Validation and Comparative Analysis
-- Notebook 7 – Temporal Model Validation
-
-# Relationship Between Research Questions and Notebooks
-
-| Research Question | Supporting Notebooks |
-|-------------------|----------------------|
-| **RQ1** – Which socioeconomic indicators are most strongly associated (quantified) with neighbourhood-level low-income prevalence in Toronto? | Notebook 1, Notebook 2 |
-| **RQ2** – Can Toronto neighbourhoods be grouped into statistically distinct socioeconomic vulnerability profiles? | Notebook 3 |
-| **RQ3(a)** – Which predictive model provides the most accurate estimates of neighbourhood-level low-income prevalence? | Notebook 4 |
-| **RQ3(b)** – To what extent can a model trained on the 2011 dataset accurately predict neighbourhood-level low-income prevalence in the independent 2016 dataset? | Notebook 5, Notebook 6, Notebook 7 |
-
+- Pearson Correlation
+- Spearman Correlation
+- VIF
+- Feature Selection Comparison
 
 ---
-## Repository Structure 
 
+## Notebook 3
+
+### PCA and Neighborhood Vulnerability Assessment
+
+Topics
+
+- Standardization
+- Principal Component Analysis
+- Explained Variance
+- Elbow Method
+- K-Means Clustering
+- Cluster Profiling
+- One-Way ANOVA
+
+---
+
+## Notebook 4
+
+### Predictive Modelling
+
+Models
+
+- Multiple Linear Regression
+- Random Forest Regression
+
+Evaluation Metrics
+
+- R²
+- Adjusted R²
+- MAE
+- RMSE
+- MAPE
+- WAPE
+- Training Time
+- Prediction Time
+- Five-Fold Cross Validation
+
+---
+
+## Notebook 5
+
+### Historical Dataset Preparation
+
+Preparation of a machine-learning-ready 2011 dataset for temporal validation.
+
+---
+
+## Notebook 6
+
+### Temporal Comparative Analysis
+
+Comparison of common socioeconomic indicators between the 2011 and 2016 datasets.
+
+---
+
+## Notebook 7
+
+### Temporal Model Validation
+
+A Linear Regression model trained on the 2011 dataset was evaluated using the independent 2016 dataset to assess model generalizability over time.
+
+---
+
+# Machine Learning Methods
+
+## Statistical Analysis
+
+- Descriptive Statistics
+- Pearson Correlation
+- Spearman Correlation
+- Variance Inflation Factor (VIF)
+- One-Way ANOVA
+
+## Unsupervised Learning
+
+- Principal Component Analysis (PCA)
+- K-Means Clustering
+
+## Supervised Learning
+
+- Multiple Linear Regression
+- Random Forest Regression
+
+## Model Validation
+
+- Train/Test Split
+- Five-Fold Cross Validation
+- Temporal Model Validation
+
+---
+
+# Key Findings
+
+The project demonstrates that neighbourhood socioeconomic vulnerability can be effectively investigated using statistical analysis and machine learning.
+
+Major findings include:
+
+- Employment, education, housing affordability, and demographic characteristics were strongly associated with neighbourhood low-income prevalence.
+
+- Principal Component Analysis successfully reduced multicollinearity while preserving the majority of socioeconomic information.
+
+- K-Means clustering identified four statistically distinct neighbourhood vulnerability profiles.
+
+- Multiple Linear Regression provided an effective balance of predictive accuracy, interpretability, computational efficiency, and model stability.
+
+- Temporal validation demonstrated that historical socioeconomic indicators remained useful predictors of future neighbourhood-level low-income prevalence.
+
+---
+
+# Repository Structure
+
+```
 CIND820-Capstone-Project/
+
 │
 ├── data/
 │   ├── raw/
@@ -202,165 +285,120 @@ CIND820-Capstone-Project/
 │   ├── 02_Feature_Relationship_Analysis.ipynb
 │   ├── 03_PCA_and_Neighborhood_Vulnerability_Assessment.ipynb
 │   ├── 04_Predictive_Modelling_Neighborhood_Vulnerability.ipynb
-│   ├── 05_2011_Machine_Learning_dataset_Preparation_for_Temporal_Comparative_Analysis.ipynb
+│   ├── 05_2011_Machine_Learning_Dataset_Preparation.ipynb
 │   ├── 06_Temporal_Validation_and_Comparative_Analysis.ipynb
 │   └── 07_Temporal_Model_Validation.ipynb
 │
 ├── reports/
+│
 ├── images/
+│
 ├── requirements.txt
+│
 └── README.md
 ```
-# Key Findings
-
-The project demonstrates that neighbourhood-level socioeconomic vulnerability can be effectively investigated using a combination of statistical analysis and machine learning techniques.
-
-The major findings include:
-
-- Housing affordability, employment, educational attainment, income, and demographic characteristics were identified as the socioeconomic indicators most strongly associated with neighbourhood-level low-income prevalence.
-
-- Principal Component Analysis (PCA) successfully reduced redundancy among correlated socioeconomic indicators while preserving the majority of the original information.
-
-- K-Means clustering identified statistically distinct neighbourhood socioeconomic vulnerability profiles, demonstrating that Toronto neighbourhoods exhibit meaningful socioeconomic groupings.
-
-- Predictive modelling demonstrated that neighbourhood-level low-income prevalence can be accurately estimated using selected socioeconomic indicators. Among the evaluated models, Random Forest Regression achieved the strongest predictive performance on the 2016 dataset.
-
-- Temporal model validation demonstrated that a Linear Regression model trained on the historical 2011 dataset successfully generalized to the independent 2016 dataset, achieving:
-
-  - **R² = 0.666**
-  - **MAE = 3.377**
-  - **RMSE = 4.543**
-  - **MAPE = 19.36%**
-  - **WAPE = 17.30%**
-
-  These results indicate that historical socioeconomic indicators remain valuable predictors of future neighbourhood-level low-income prevalence.
 
 ---
 
-# Overall Conclusions
-
-The project successfully addressed all three research questions through a structured analytical workflow.
-
-The findings demonstrate that socioeconomic indicators can be used to quantify neighbourhood vulnerability, classify neighbourhoods into statistically distinct socioeconomic profiles, develop accurate predictive models, and evaluate whether these predictive relationships remain stable over time.
-
-The temporal validation further demonstrated that a model trained using historical socioeconomic data maintained good predictive performance when applied to future neighbourhood data, supporting the use of predictive analytics as a tool for long-term socioeconomic planning.
-
-Overall, the developed framework provides a reproducible approach for identifying neighbourhoods at greater socioeconomic risk and supports evidence-based planning for municipal governments, housing policy analysts, and community organizations.
-
----
-
-# Limitations
-
-The original project design proposed using the **2016** and **2021 Toronto Neighbourhood Profiles** to evaluate temporal changes in neighbourhood socioeconomic vulnerability.
-
-During data preparation, however, the 2021 dataset was found to be insufficiently comparable with the 2016 dataset due to differences in variable availability, indicator definitions, and overall dataset structure. These inconsistencies limited the ability to construct directly comparable machine-learning-ready datasets using a common set of socioeconomic indicators.
-
-To ensure methodological consistency and reliable temporal comparison, the study instead used the **2011** and **2016** Toronto Neighbourhood Profiles, which shared a more consistent structure and a common set of socioeconomic variables. This enabled the development of comparable machine-learning-ready datasets and supported a valid temporal model validation.
-
-Additionally, this project focuses exclusively on neighbourhood-level socioeconomic indicators available through the Toronto Neighbourhood Profiles. Other potentially important determinants of neighbourhood vulnerability, such as health outcomes, crime statistics, transportation accessibility, or longitudinal economic shocks, were beyond the scope of this study.
-
----
-
-# Future Work
-
-Future research could extend this project by:
-
-- incorporating future releases of the Toronto Neighbourhood Profiles as additional comparable datasets become available;
-
-- integrating complementary datasets such as housing market trends, public health indicators, transportation accessibility, or crime statistics;
-
-- investigating additional machine learning algorithms such as Gradient Boosting, XGBoost, or Neural Networks;
-
-- developing interactive dashboards to support municipal decision-makers; and
-
-- extending the framework to evaluate neighbourhood socioeconomic vulnerability in other Canadian municipalities.
-
----
-
-# Software and Libraries
-
-The project was developed using:
+# Software
 
 - Python
 - Jupyter Notebook
 - Visual Studio Code
+- Git
+- GitHub
 
-Primary Python libraries include:
+---
 
-- Pandas
-- NumPy
-- Matplotlib
-- SciPy
-- Scikit-learn
-- Statsmodels
-- Yellowbrick
-- OpenPyXL
+# Python Libraries
+
+- pandas
+- numpy
+- matplotlib
+- scipy
+- scikit-learn
+- statsmodels
+- yellowbrick
+- openpyxl
 
 ---
 
 # Installation
 
-Clone the repository:
+Clone the repository
 
 ```bash
-git clone https://github.com/<your-github-username>/CIND820-Capstone-Project.git
+git clone https://github.com/yourusername/CIND820-Capstone-Project.git
 ```
 
-Install the required packages:
+Navigate into the project
+
+```bash
+cd CIND820-Capstone-Project
+```
+
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Open the notebooks using Jupyter Notebook or Visual Studio Code.
+Launch Jupyter Notebook
+
+```bash
+jupyter notebook
+```
 
 ---
 
-# Project Workflow Standard
+# Results
 
-Each notebook follows a consistent analytical structure:
+The developed framework provides a reproducible approach for:
 
-**Objective → Code → Interpretation**
-
-This standardized workflow promotes transparency, reproducibility, and consistency throughout the project.
-
----
-
-# AI Productivity Declaration
-
-Generative AI (ChatGPT) was used to assist with:
-
-- code refinement;
-- brainstorming the ideas;
-- debugging;
-- documentation;
-- markdown preparation;
-- project organization; and
-- technical explanations.
-
-All analytical decisions, data preparation, statistical analyses, model development, interpretation of results, and final project content were independently reviewed, validated, and approved by the project author.
+- identifying neighbourhoods experiencing elevated socioeconomic vulnerability;
+- supporting evidence-based housing and community planning;
+- evaluating predictive model performance;
+- assessing model stability over time; and
+- informing long-term municipal planning decisions.
 
 ---
 
-# Acknowledgements
+# Limitations
 
-This project acknowledges the following organizations and resources:
+The original project proposed using the 2016 and 2021 Toronto Neighbourhood Profiles for temporal analysis.
 
-- City of Toronto Open Data Portal
-- Toronto Metropolitan University
-- The Chang School of Continuing Education
-- CIND820 Capstone Project
-- Dr. Tamer Abdou for continuous support
+Due to differences in variable definitions and dataset structure, the 2021 dataset was not directly comparable with the 2016 dataset. Consequently, the study used the 2011 and 2016 datasets to ensure methodological consistency and reliable temporal validation.
+
+---
+
+# Future Work
+
+Future research may extend this framework by:
+
+- incorporating future Toronto Neighbourhood Profile releases;
+- integrating additional datasets such as health, crime, transportation, and housing market data;
+- evaluating Gradient Boosting, XGBoost, and Neural Networks;
+- developing interactive dashboards for decision makers; and
+- applying the framework to other Canadian municipalities.
+
 ---
 
 # Author
 
 **Kamola Salyamova**
 
+CIND820 Capstone Project
+
 Toronto Metropolitan University
 
 The Chang School of Continuing Education
 
-CIND820 – Capstone Project
+Supervisor: Dr. Tamer Abdou
 
-2026
+July 2026
+
+---
+
+# Acknowledgements
+
+This project was completed as part of the CIND820 Capstone Project at Toronto Metropolitan University using publicly available data from the City of Toronto Open Data Portal.
