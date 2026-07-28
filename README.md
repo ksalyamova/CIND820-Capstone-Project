@@ -21,7 +21,7 @@ The project follows a complete data science workflow including:
 - Multiple Linear Regression
 - Random Forest Regression
 - Cross Validation
-- Temporal Model Validation
+
 
 The final outcome is a reproducible machine learning framework capable of supporting evidence-based municipal planning and socioeconomic decision-making.
 
@@ -122,11 +122,10 @@ The 2011 dataset was prepared for temporal validation to evaluate whether histor
 
 ---
 
-# Target Variable
 
 **Dependent Variable**
 
-Low_Income_AfterTax_Pct (LIM-AT)
+Low_Income_AfterTax_Pct (LIM-AT)- proxy 
 
 The percentage of individuals living below the Low Income Measure After Tax (LIM-AT), representing neighbourhood socioeconomic vulnerability.
 
